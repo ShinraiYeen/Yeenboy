@@ -4,3 +4,4 @@ build/*
 .cache
 
 game-boy-test-roms
+game-boy-test-roms/*

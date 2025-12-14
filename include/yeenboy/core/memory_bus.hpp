@@ -4,8 +4,8 @@
 
 #include <array>
 
-#include "yeenboy/core/vram.hpp"
-#include "yeenboy/core/wram.hpp"
+#include "yeenboy/core/memory/vram.hpp"
+#include "yeenboy/core/memory/wram.hpp"
 
 /**
  * @brief Defines the memory bus for the Gameboy.

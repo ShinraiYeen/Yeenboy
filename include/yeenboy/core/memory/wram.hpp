@@ -1,6 +1,6 @@
 #pragma once
 
-#include "yeenboy/core/memory.hpp"
+#include "yeenboy/core/memory/memory.hpp"
 
 static constexpr size_t WRAM_SIZE_BYTES = 8192;
 
