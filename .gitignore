@@ -2,3 +2,5 @@ build
 build/*
 
 .cache
+
+game-boy-test-roms

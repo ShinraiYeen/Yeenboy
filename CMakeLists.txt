@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(YeenBoy
+project(yeenboy
     VERSION 1.0
     LANGUAGES CXX
 )
@@ -15,12 +15,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Find dependencies
-find_package(SDL2 REQUIRED)
+# Compile options
+option(YEENBOY_TESTS "Compile with tests. (Default: ON)" ON)
 
-# Source files and main executable
-file(GLOB SOURCE_FILES "src/*.cpp")
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
-target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic)
-target_include_directories(${PROJECT_NAME} PRIVATE "src")
-target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2)
+# Display compile options
+message("Compile options:")
+message("   YEENBOY_TESTS: ${YEENBOY_TESTS}")
+
+add_subdirectory("src")
+add_subdirectory("app")
+
+if (${YEENBOY_TESTS})
+    enable_testing()
+    add_subdirectory("vendor/googletest")
+    add_subdirectory("tests")
+endif()
