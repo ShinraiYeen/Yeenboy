@@ -14,6 +14,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # Compile options
 option(YEENBOY_TESTS "Compile with tests. (Default: ON)" ON)
@@ -21,6 +22,11 @@ option(YEENBOY_TESTS "Compile with tests. (Default: ON)" ON)
 # Display compile options
 message("Compile options:")
 message("   YEENBOY_TESTS: ${YEENBOY_TESTS}")
+
+# spdlog
+add_subdirectory("vendor/spdlog")
+set(SPDLOG_INSTALL OFF CACHE BOOL "Disable spdlog install" FORCE)
+set(SPDLOG_FMT_EXTERNAL OFF CACHE BOOL "Use internal fmt" FORCE)
 
 add_subdirectory("src")
 add_subdirectory("app")

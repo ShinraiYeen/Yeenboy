@@ -1,9 +1,10 @@
 #include "yeenboy/core/cartridge.hpp"
 
-#include <cstdint>
 #include <fstream>
 #include <stdexcept>
 #include <unordered_map>
+
+#include "yeenboy/common/logger.hpp"
 
 const std::unordered_map<CartridgeType, std::string> kCartridgeTypeToString = {
     {CartridgeType::ROM_ONLY, "ROM Only"},
@@ -74,13 +75,13 @@ Cartridge::Cartridge(const std::filesystem::path rom_path) {
     file.seekg(0, std::ios::beg);
     m_data.resize(file_size);
     file.read(reinterpret_cast<char*>(m_data.data()), file_size);
-    printf("Loaded %lu bytes into cartridge memory\n", file_size);
+    Logger::Debug("Loaded {} bytes into cartridge memory", file_size);
 
     m_header = ReadCartridgeHeader();
-    printf("Title: %s\n", m_header.title.c_str());
-    printf("ROM Size: %s\n", kRomSizeToString.at((m_header.rom_size)).c_str());
-    printf("RAM Size: %s\n", kRamSizeToString.at(m_header.ram_size).c_str());
-    printf("Cartridge Type: %s\n", kCartridgeTypeToString.at(m_header.cartridge_type).c_str());
+    Logger::Debug("Title: {}", m_header.title);
+    Logger::Debug("MBC: {}", kCartridgeTypeToString.at(m_header.cartridge_type));
+    Logger::Debug("ROM: {}", kRomSizeToString.at(m_header.rom_size));
+    Logger::Debug("RAM: {}", kRamSizeToString.at(m_header.ram_size));
 
-    printf("Cartridge initialized\n");
+    Logger::Debug("Cartridge initialized");
 }
