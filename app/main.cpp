@@ -3,13 +3,17 @@
 #include <cstdio>
 #include <cstdlib>
 
-void PrintUsage(char *command) { printf("Usage: %s <rom_file>\n", command); }
+#include "yeenboy/yeenboy.hpp"
 
-int main(int argc, char **argv) {
+void PrintUsage(char* command) { printf("Usage: %s <rom_file>\n", command); }
+
+int main(int argc, char** argv) {
     if (argc != 2) {
         PrintUsage(argv[0]);
         return EXIT_FAILURE;
     }
+
+    Yeenboy yeenboy(argv[1]);
 
     return EXIT_SUCCESS;
 }

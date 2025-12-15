@@ -2,8 +2,6 @@
 
 #include <stdint.h>
 
-#include <array>
-
 #include "yeenboy/core/memory/vram.hpp"
 #include "yeenboy/core/memory/wram.hpp"
 
@@ -15,7 +13,7 @@ class MemoryBus {
    public:
     // Constructors
     MemoryBus() = delete;
-    MemoryBus(WRAM& wram, VRAM& vram) : m_wram(wram), m_vram(vram) {}
+    MemoryBus(WRAM& wram, VRAM& vram);
 
     // Destructors
     ~MemoryBus() = default;
