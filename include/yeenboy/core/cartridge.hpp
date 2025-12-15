@@ -3,6 +3,10 @@
 #include <filesystem>
 #include <vector>
 
+/**
+ * @brief Defines addresses for cartridge header information.
+ *
+ */
 namespace CartridgeHeaderAddresses {
 static constexpr size_t TITLE_START = 0x134;
 static constexpr size_t TITLE_END = 0x143;
@@ -54,6 +58,10 @@ enum class CartridgeType : uint8_t {
     HuC1_RAM_BATTERY = 0xFF,
 };
 
+/**
+ * @brief Defines cartridge codes for defining ROM size.
+ *
+ */
 enum class RomSize : uint8_t {
     KB_32 = 0x00,
     KB_64 = 0x01,
@@ -69,6 +77,10 @@ enum class RomSize : uint8_t {
     MB_1_5 = 0x54,
 };
 
+/**
+ * @brief Defines cartridge codes for defining RAM size.
+ *
+ */
 enum class RamSize : uint8_t {
     NONE = 0x00,
     UNUSED = 0x01,
@@ -78,14 +90,18 @@ enum class RamSize : uint8_t {
     KB_64 = 0x05,
 };
 
+/**
+ * @brief Cartridge header information.
+ *
+ */
 struct CartridgeHeader {
-    std::string title;
-    uint8_t cgb_flag;
-    uint8_t sgb_flag;
-    CartridgeType cartridge_type;
-    RomSize rom_size;
-    RamSize ram_size;
-    uint8_t destination_code;
+    std::string title;             // Cartridge title
+    uint8_t cgb_flag;              // Gameboy Color support flag
+    uint8_t sgb_flag;              // Super Gameboy support flag
+    CartridgeType cartridge_type;  // Cartridge MBC type
+    RomSize rom_size;              // ROM size
+    RamSize ram_size;              // RAM size
+    uint8_t destination_code;      // Destination code
 };
 
 /**
