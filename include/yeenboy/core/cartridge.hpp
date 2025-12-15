@@ -59,37 +59,6 @@ enum class CartridgeType : uint8_t {
     HuC1_RAM_BATTERY = 0xFF,
 };
 
-static const std::unordered_map<CartridgeType, std::string> kCartridgeTypeToString = {
-    {CartridgeType::ROM_ONLY, "ROM Only"},
-    {CartridgeType::MBC1, "MBC1"},
-    {CartridgeType::MBC1_RAM, "MBC1+RAM"},
-    {CartridgeType::MBC1_RAM_BATTERY, "MBC1+RAM+BATTERY"},
-    {CartridgeType::MBC2, "MBC2"},
-    {CartridgeType::MBC2_BATTERY, "MBC2+BATTERY"},
-    {CartridgeType::ROM_RAM, "ROM+RAM"},
-    {CartridgeType::ROM_RAM_BATTERY, "ROM+RAM+BATTERY"},
-    {CartridgeType::MMM01, "MMM01"},
-    {CartridgeType::MMM01_RAM, "MMM01+RAM"},
-    {CartridgeType::MMM01_RAM_BATTERY, "MMM01+RAM+BATTERY"},
-    {CartridgeType::MBC3_TIMER_BATTERY, "MBC3+TIMER+BATTERY"},
-    {CartridgeType::MBC3_TIMER_RAM_BATTERY, "MBC3+TIMER+RAM+BATTERY"},
-    {CartridgeType::MBC3, "MBC3"},
-    {CartridgeType::MBC3_RAM, "MBC3+RAM"},
-    {CartridgeType::MBC3_RAM_BATTERY, "MBC3+RAM+BATTERY"},
-    {CartridgeType::MBC5, "MBC5"},
-    {CartridgeType::MBC5_RAM, "MBC5+RAM"},
-    {CartridgeType::MBC5_RAM_BATTERY, "MBC5+RAM+BATTERY"},
-    {CartridgeType::MBC5_RUMBLE, "MBC5+RUMBLE"},
-    {CartridgeType::MBC5_RUMBLE_RAM, "MBC5+RUMBLE+RAM"},
-    {CartridgeType::MBC5_RUMBLE_RAM_BATTERY, "MBC5+RUMBLE+RAM+BATTERY"},
-    {CartridgeType::MBC6, "MBC6"},
-    {CartridgeType::MBC7_SENSOR_RUMBLE_RAM_BATTERY, "MBC7+SENSOR+RUMBLE+RAM+BATTERY"},
-    {CartridgeType::POCKET_CAMERA, "POCKET CAMERA"},
-    {CartridgeType::BANDAI_TAMA5, "BANDAI TAMA5"},
-    {CartridgeType::HuC3, "HuC3"},
-    {CartridgeType::HuC1_RAM_BATTERY, "HuC1+RAM+BATTERY"},
-};
-
 /**
  * @brief Defines cartridge codes for defining ROM size.
  *
@@ -121,6 +90,10 @@ enum class RamSize : uint8_t {
     KB_128 = 0x04,
     KB_64 = 0x05,
 };
+
+extern const std::unordered_map<CartridgeType, std::string> kCartridgeTypeToString;
+extern const std::unordered_map<RomSize, std::string> kRomSizeToString;
+extern const std::unordered_map<RamSize, std::string> kRamSizeToString;
 
 /**
  * @brief Cartridge header information.
