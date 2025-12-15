@@ -36,7 +36,7 @@ Cartridge::Cartridge(const std::filesystem::path rom_path) {
     printf("Title: %s\n", m_header.title.c_str());
     printf("ROM Size: %02hhx\n", static_cast<uint8_t>(m_header.rom_size));
     printf("RAM Size: %02hhx\n", static_cast<uint8_t>(m_header.ram_size));
-    printf("Cartridge Type: %02hhx\n", static_cast<uint8_t>(m_header.cartridge_type));
+    printf("Cartridge Type: %s\n", kCartridgeTypeToString.at(m_header.cartridge_type).c_str());
 
     printf("Cartridge initialized\n");
 }
