@@ -143,4 +143,5 @@ class Cartridge {
     std::unique_ptr<MBC> m_mbc;  // Memory bank controller
 
     CartridgeHeader ReadCartridgeHeader();
+    std::unique_ptr<MBC> GetMBC(CartridgeType type);
 };

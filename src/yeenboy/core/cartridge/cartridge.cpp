@@ -1,10 +1,12 @@
 #include "yeenboy/core/cartridge/cartridge.hpp"
 
 #include <fstream>
+#include <memory>
 #include <stdexcept>
 #include <unordered_map>
 
 #include "yeenboy/common/logger.hpp"
+#include "yeenboy/core/cartridge/mbc/mbc1.hpp"
 
 const std::unordered_map<CartridgeType, std::string> kCartridgeTypeToString = {
     {CartridgeType::ROM_ONLY, "ROM Only"},
@@ -63,6 +65,17 @@ CartridgeHeader Cartridge::ReadCartridgeHeader() {
     return header;
 }
 
+std::unique_ptr<MBC> Cartridge::GetMBC(CartridgeType type) {
+    switch (type) {
+        case CartridgeType::MBC1:
+        case CartridgeType::MBC1_RAM:
+        case CartridgeType::MBC1_RAM_BATTERY:
+            return std::make_unique<MBC1>(m_data, m_sram);
+        default:
+            throw std::runtime_error("Unsupported cartridge type");
+    }
+}
+
 Cartridge::Cartridge(const std::filesystem::path rom_path) {
     std::ifstream file(rom_path);
     if (!file.is_open()) {
@@ -78,6 +91,8 @@ Cartridge::Cartridge(const std::filesystem::path rom_path) {
     Logger::Debug("Loaded {} bytes into cartridge memory", file_size);
 
     m_header = ReadCartridgeHeader();
+    m_mbc = GetMBC(m_header.cartridge_type);
+
     Logger::Debug("Title: {}", m_header.title);
     Logger::Debug("MBC: {}", kCartridgeTypeToString.at(m_header.cartridge_type));
     Logger::Debug("ROM: {}", kRomSizeToString.at(m_header.rom_size));
@@ -86,7 +101,7 @@ Cartridge::Cartridge(const std::filesystem::path rom_path) {
     Logger::Debug("Cartridge initialized");
 }
 
-uint8_t Cartridge::ReadRom(size_t addr) const { return m_data.at(addr); }
-uint8_t Cartridge::ReadRam(size_t addr) const { return 0x00; }
-void Cartridge::WriteRom(size_t addr, uint8_t val) {}
-void Cartridge::WriteRam(size_t addr, uint8_t val) {}
+uint8_t Cartridge::ReadRom(size_t addr) const { return m_mbc->ReadRom(addr); }
+uint8_t Cartridge::ReadRam(size_t addr) const { return m_mbc->ReadRam(addr); }
+void Cartridge::WriteRom(size_t addr, uint8_t val) { m_mbc->WriteRom(addr, val); }
+void Cartridge::WriteRam(size_t addr, uint8_t val) { m_mbc->WriteRam(addr, val); }

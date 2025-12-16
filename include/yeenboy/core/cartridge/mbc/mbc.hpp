@@ -6,7 +6,7 @@
 
 class MBC {
    public:
-    virtual ~MBC() = 0;
+    virtual ~MBC() = default;
 
     virtual uint8_t ReadRom(size_t addr) const = 0;
     virtual uint8_t ReadRam(size_t addr) const = 0;
