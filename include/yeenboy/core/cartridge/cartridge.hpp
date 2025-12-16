@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "yeenboy/core/cartridge/mbc/mbc.hpp"
+#include "yeenboy/core/mmu_module.hpp"
 
 /**
  * @brief Defines addresses for cartridge header information.
@@ -121,18 +122,15 @@ struct CartridgeHeader {
  * included in the MMU.
  *
  */
-class Cartridge {
+class Cartridge final : public MMUModule {
    public:
     Cartridge() = delete;
     Cartridge(const std::filesystem::path rom_path);
 
     ~Cartridge() {}
 
-    uint8_t ReadRom(size_t addr) const;
-    uint8_t ReadRam(size_t addr) const;
-
-    void WriteRom(size_t addr, uint8_t val);
-    void WriteRam(size_t addr, uint8_t val);
+    uint8_t Read(size_t addr) const override;
+    void Write(size_t addr, uint8_t val) override;
 
    private:
     std::vector<uint8_t> m_data;  // Cartridge ROM

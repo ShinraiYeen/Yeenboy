@@ -2,9 +2,9 @@
 
 #include <array>
 
-#include "yeenboy/core/memory/memory.hpp"
+#include "yeenboy/core/mmu_module.hpp"
 
-class VRAM : public Memory {
+class VRAM : public MMUModule {
    public:
     static constexpr size_t VRAM_SIZE = 0x2000;  // 8Kb
 

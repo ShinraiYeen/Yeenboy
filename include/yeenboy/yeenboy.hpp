@@ -4,6 +4,7 @@
 
 #include "yeenboy/core/cartridge/cartridge.hpp"
 #include "yeenboy/core/cpu.hpp"
+#include "yeenboy/core/io_controller.hpp"
 #include "yeenboy/core/memory_bus.hpp"
 
 /**
@@ -23,6 +24,7 @@ class Yeenboy {
     Cartridge m_cartridge;
     WRAM m_wram;
     VRAM m_vram;
+    IOController m_io_controller;
     MemoryBus m_mmu;
     CPU m_cpu;
 };

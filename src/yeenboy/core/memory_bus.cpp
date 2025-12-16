@@ -2,11 +2,14 @@
 
 #include <stdexcept>
 
+#include "yeenboy/common/defs.hpp"
 #include "yeenboy/common/logger.hpp"
+#include "yeenboy/common/utils.hpp"
 #include "yeenboy/core/cartridge/cartridge.hpp"
+#include "yeenboy/core/io_controller.hpp"
 
-MemoryBus::MemoryBus(WRAM& wram, VRAM& vram, Cartridge& cartridge)
-    : m_wram(wram), m_vram(vram), m_cartridge(cartridge) {
+MemoryBus::MemoryBus(WRAM& wram, VRAM& vram, Cartridge& cartridge, IOController& io_controller)
+    : m_wram(wram), m_vram(vram), m_cartridge(cartridge), m_io_controller(io_controller) {
     Logger::Debug("Memory bus initialized");
 }
 
@@ -22,24 +25,50 @@ uint8_t MemoryBus::Read(size_t addr) {
         case 0x5:
         case 0x6:
         case 0x7:
-            return m_cartridge.ReadRom(addr - MMUAddresses::ROM_BANK_NN_START);
-
         case 0xA:
         case 0xB:
-            return m_cartridge.ReadRam(addr - MMUAddresses::EXTERNAL_RAM_START);
+            return m_cartridge.Read(addr);
 
         case 0x8:
         case 0x9:
-            return m_vram.Read(addr - MMUAddresses::VRAM_START);
+            return m_vram.Read(addr);
 
         case 0xC:
         case 0xD:
-            return m_wram.Read(addr - MMUAddresses::WRAM_START);
+            return m_wram.Read(addr);
 
         default:
-            // TODO: Handle other cases here
+            if (RANGE(addr, defs::MMUAddresses::ECHO_RAM_START, defs::MMUAddresses::ECHO_RAM_END)) {
+                // Echo RAM
+                return m_wram.Read(addr - (defs::MMUAddresses::ECHO_RAM_START - defs::MMUAddresses::WRAM_END));
+            }
+
+            else if (RANGE(addr, defs::MMUAddresses::OAM_START, defs::MMUAddresses::OAM_END)) {
+                // Object attribute memory
+                throw std::runtime_error("OAM not implemented");
+            }
+
+            else if (RANGE(addr, defs::MMUAddresses::UNUSABLE_START, defs::MMUAddresses::UNUSABLE_END)) {
+                // Unusable memory
+                throw std::runtime_error("Cannot read from unusable memory");
+            }
+
+            else if (RANGE(addr, defs::MMUAddresses::IO_REGISTER_START, defs::MMUAddresses::IO_REGISTER_END)) {
+                // IO registers
+                return m_io_controller.Read(addr);
+            }
+
+            else if (RANGE(addr, defs::MMUAddresses::HIGH_RAM_START, defs::MMUAddresses::HIGH_RAM_END)) {
+                // High RAM
+                throw std::runtime_error("High RAM not implemented");
+            }
+
+            else if (addr == defs::MMUAddresses::INTERRUPT_ENABLE) {
+                // Interrupt enable register
+                throw std::runtime_error("Interrupt enable register not implemented");
+            }
+
             throw std::runtime_error("Attempted to read from unimplemented memory address: " + std::to_string(addr));
-            break;
     }
 }
 
@@ -55,27 +84,52 @@ void MemoryBus::Write(size_t addr, uint8_t val) {
         case 0x5:
         case 0x6:
         case 0x7:
-            m_cartridge.WriteRom(addr - MMUAddresses::ROM_BANK_NN_START, val);
-            break;
-
         case 0xA:
         case 0xB:
-            m_cartridge.WriteRam(addr - MMUAddresses::EXTERNAL_RAM_START, val);
+            m_cartridge.Write(addr, val);
             break;
 
         case 0x8:
         case 0x9:
-            m_vram.Write(addr - MMUAddresses::VRAM_START, val);
+            m_vram.Write(addr, val);
             break;
 
         case 0xC:
         case 0xD:
-            m_wram.Write(addr - MMUAddresses::WRAM_START, val);
+            m_wram.Write(addr, val);
             break;
 
         default:
-            // TODO: Handle other cases here
+            if (RANGE(addr, defs::MMUAddresses::ECHO_RAM_START, defs::MMUAddresses::ECHO_RAM_END)) {
+                // Echo RAM
+                m_wram.Write(addr - (defs::MMUAddresses::ECHO_RAM_START - defs::MMUAddresses::WRAM_END), val);
+            }
+
+            else if (RANGE(addr, defs::MMUAddresses::OAM_START, defs::MMUAddresses::OAM_END)) {
+                // Object attribute memory
+                throw std::runtime_error("OAM not implemented");
+            }
+
+            else if (RANGE(addr, defs::MMUAddresses::UNUSABLE_START, defs::MMUAddresses::UNUSABLE_END)) {
+                // Unusable memory
+                throw std::runtime_error("Cannot read from unusable memory");
+            }
+
+            else if (RANGE(addr, defs::MMUAddresses::IO_REGISTER_START, defs::MMUAddresses::IO_REGISTER_END)) {
+                // IO registers
+                m_io_controller.Write(addr, val);
+            }
+
+            else if (RANGE(addr, defs::MMUAddresses::HIGH_RAM_START, defs::MMUAddresses::HIGH_RAM_END)) {
+                // High RAM
+                throw std::runtime_error("High RAM not implemented");
+            }
+
+            else if (addr == defs::MMUAddresses::INTERRUPT_ENABLE) {
+                // Interrupt enable register
+                throw std::runtime_error("Interrupt enable register not implemented");
+            }
+
             throw std::runtime_error("Attempted to read from unimplemented memory address: " + std::to_string(addr));
-            break;
     }
 }

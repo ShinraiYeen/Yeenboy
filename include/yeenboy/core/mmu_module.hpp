@@ -7,13 +7,13 @@
 /**
  * @brief Generic interface for memory.
  */
-class Memory {
+class MMUModule {
    public:
-    virtual ~Memory() = default;
+    virtual ~MMUModule() = default;
 
     virtual uint8_t Read(size_t addr) const = 0;
     virtual void Write(size_t addr, uint8_t val) = 0;
 
    protected:
-    Memory() = default;
+    MMUModule() = default;
 };

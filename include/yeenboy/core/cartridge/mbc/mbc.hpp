@@ -8,11 +8,8 @@ class MBC {
    public:
     virtual ~MBC() = default;
 
-    virtual uint8_t ReadRom(size_t addr) const = 0;
-    virtual uint8_t ReadRam(size_t addr) const = 0;
-
-    virtual void WriteRom(size_t addr, uint8_t val) = 0;
-    virtual void WriteRam(size_t addr, uint8_t val) = 0;
+    virtual uint8_t Read(size_t addr) const = 0;
+    virtual void Write(size_t addr, uint8_t val) = 0;
 
    private:
    protected:

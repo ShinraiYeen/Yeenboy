@@ -2,16 +2,11 @@
 
 #include <stdexcept>
 
+#include "yeenboy/common/defs.hpp"
 #include "yeenboy/common/logger.hpp"
 
-VRAM::VRAM() : Memory() { Logger::Debug("VRAM initialized"); }
+VRAM::VRAM() : MMUModule() { Logger::Debug("VRAM initialized"); }
 
-uint8_t VRAM::Read(size_t addr) const {
-    if (addr >= VRAM_SIZE) throw std::runtime_error("Out of bounds read in VRAM");
-    return m_data.at(addr);
-}
+uint8_t VRAM::Read(size_t addr) const { return m_data.at(addr - defs::MMUAddresses::VRAM_START); }
 
-void VRAM::Write(size_t addr, uint8_t val) {
-    if (addr >= VRAM_SIZE) throw std::runtime_error("Out of bounds write in VRAM");
-    m_data.at(addr) = val;
-}
+void VRAM::Write(size_t addr, uint8_t val) { m_data.at(addr - defs::MMUAddresses::VRAM_START) = val; }
