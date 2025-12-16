@@ -1,7 +1,5 @@
 #include "yeenboy/core/memory/vram.hpp"
 
-#include <stdexcept>
-
 #include "yeenboy/common/defs.hpp"
 #include "yeenboy/common/logger.hpp"
 

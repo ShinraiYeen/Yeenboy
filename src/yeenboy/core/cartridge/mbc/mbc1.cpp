@@ -9,7 +9,7 @@
 MBC1::MBC1(std::vector<uint8_t>& rom, std::vector<uint8_t>& ram) : MBC(rom, ram) { Logger::Debug("Initialized MBC1"); }
 
 uint8_t MBC1::Read(size_t addr) const {
-    if (RANGE(addr, 0x0000, 0x3FFF)) {
+    if (addr <= 0x3FFF) {
         // Memory in this range is fixed
         return m_rom.at(addr);
     }
@@ -28,7 +28,7 @@ uint8_t MBC1::Read(size_t addr) const {
 }
 
 void MBC1::Write(size_t addr, uint8_t val) {
-    if (RANGE(addr, 0x0000, 0x1FFF)) {
+    if (addr <= 0x1FFF) {
         // MBC1 RAM enable
         throw std::runtime_error("MBC1 RAM enable not implemented");
     }
