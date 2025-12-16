@@ -123,8 +123,6 @@ struct CartridgeHeader {
  */
 class Cartridge {
    public:
-    static constexpr size_t BANK_SIZE = 0x2000;  // Gameboy banks are 8Kb
-
     Cartridge() = delete;
     Cartridge(const std::filesystem::path rom_path);
 

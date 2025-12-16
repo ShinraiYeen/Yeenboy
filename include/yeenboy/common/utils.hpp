@@ -14,4 +14,6 @@ inline uint16_t CombineBytes(uint8_t high, uint8_t low) {
 inline uint8_t ExtractLow(uint16_t val) { return static_cast<uint8_t>(val & 0xFF); }
 
 inline uint8_t ExtractHigh(uint16_t val) { return static_cast<uint8_t>((val >> 8) & 0xFF); }
+
+#define RANGE(var, start, end) ((var >= start) && (var <= end))
 }  // namespace util
