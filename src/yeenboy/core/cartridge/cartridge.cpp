@@ -1,4 +1,4 @@
-#include "yeenboy/core/cartridge.hpp"
+#include "yeenboy/core/cartridge/cartridge.hpp"
 
 #include <fstream>
 #include <stdexcept>
@@ -85,3 +85,8 @@ Cartridge::Cartridge(const std::filesystem::path rom_path) {
 
     Logger::Debug("Cartridge initialized");
 }
+
+uint8_t Cartridge::ReadRom(size_t addr) const { return m_data.at(addr); }
+uint8_t Cartridge::ReadRam(size_t addr) const { return 0x00; }
+void Cartridge::WriteRom(size_t addr, uint8_t val) {}
+void Cartridge::WriteRam(size_t addr, uint8_t val) {}

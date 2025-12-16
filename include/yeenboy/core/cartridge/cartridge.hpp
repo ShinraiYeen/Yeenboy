@@ -1,8 +1,11 @@
 #pragma once
 
 #include <filesystem>
+#include <memory>
 #include <unordered_map>
 #include <vector>
+
+#include "yeenboy/core/cartridge/mbc/mbc.hpp"
 
 /**
  * @brief Defines addresses for cartridge header information.
@@ -94,6 +97,8 @@ enum class RamSize : uint8_t {
 extern const std::unordered_map<CartridgeType, std::string> kCartridgeTypeToString;
 extern const std::unordered_map<RomSize, std::string> kRomSizeToString;
 extern const std::unordered_map<RamSize, std::string> kRamSizeToString;
+extern const std::unordered_map<RomSize, size_t> kRomSizeToNumBanks;
+extern const std::unordered_map<RamSize, size_t> kRamSizeToNumBanks;
 
 /**
  * @brief Cartridge header information.
@@ -118,14 +123,24 @@ struct CartridgeHeader {
  */
 class Cartridge {
    public:
+    static constexpr size_t BANK_SIZE = 0x2000;  // Gameboy banks are 8Kb
+
     Cartridge() = delete;
     Cartridge(const std::filesystem::path rom_path);
 
-    ~Cartridge() = default;
+    ~Cartridge() {}
+
+    uint8_t ReadRom(size_t addr) const;
+    uint8_t ReadRam(size_t addr) const;
+
+    void WriteRom(size_t addr, uint8_t val);
+    void WriteRam(size_t addr, uint8_t val);
 
    private:
-    std::vector<uint8_t> m_data;  // Cartridge data
+    std::vector<uint8_t> m_data;  // Cartridge ROM
+    std::vector<uint8_t> m_sram;  // Cartridge SRAM
     CartridgeHeader m_header;
+    std::unique_ptr<MBC> m_mbc;  // Memory bank controller
 
     CartridgeHeader ReadCartridgeHeader();
 };
