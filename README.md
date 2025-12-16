@@ -89,22 +89,12 @@ classDiagram
     class RamSize
     class CartridgeType
 
-    class Cartridge {
-        +ReadRom(addr): uint8_t
-        +ReadRam(addr): uint8_t
-        +WriteRom(addr, val): uint8_t
-        +WriteRam(addr, val): uint8_t
-
-        -m_rom: std::vector~uint8_t~
-        -m_ram: std::vector~uint8_t~
-    }
-
     class MemoryBus {
         +Read(addr): uint8_t
         +Write(addr, val)
     }
 
-    class Memory {
+    class MMUModule {
         +Read(addr): uint8_t
         +Write(addr, val)
     }
@@ -123,6 +113,20 @@ classDiagram
         -m_data: std::vector~uint8_t~
     }
 
+    class OAM {
+        +Read(addr): uint8_t
+        +Write(addr, val)
+
+        -m_data: std::vector~uint8_t~
+    }
+
+    class HighRAM {
+        +Read(addr): uint8_t
+        +Write(addr, val)
+
+        -m_data: std::vector~uint8_t~
+    }
+
     class IOController {
         +Read(addr): uint8_t
         +Write(addr, val)
@@ -134,11 +138,17 @@ classDiagram
     class Joypad
     class SerialPort
 
+    class Cartridge {
+        +Read(addr): uint8_t
+        +Write(addr, val): uint8_t
+
+        -m_rom: std::vector~uint8_t~
+        -m_ram: std::vector~uint8_t~
+    }
+
     class MBC {
-        +ReadRom(addr): uint8_t
-        +ReadRam(addr): uint8_t
-        +WriteRom(addr, val)
-        +WriteRam(addr, val)
+        +Read(addr): uint8_t
+        +Write(addr, val)
     }
 
     class MBC1 {
@@ -147,14 +157,21 @@ classDiagram
     class MBC3
     class MBC5
 
-    WRAM ..|> Memory
-    VRAM ..|> Memory
+    WRAM ..|> MMUModule
+    VRAM ..|> MMUModule
+    Cartridge ..|> MMUModule
+    IOController ..|> MMUModule
+    OAM ..|> MMUModule
+    HighRAM ..|> MMUModule
+
 
 
     MemoryBus o-- Cartridge
     MemoryBus o-- WRAM
     MemoryBus o-- VRAM
     MemoryBus o-- IOController
+    MemoryBus o-- OAM
+    MemoryBus o-- HighRAM
 
     CPU o-- MemoryBus
     CPU *-- Register
