@@ -123,6 +123,17 @@ classDiagram
         -m_data: std::vector~uint8_t~
     }
 
+    class IOController {
+        +Read(addr): uint8_t
+        +Write(addr, val)
+    }
+    
+    class APU
+    class Timer
+    class PPU
+    class Joypad
+    class SerialPort
+
     class MBC {
         +ReadRom(addr): uint8_t
         +ReadRam(addr): uint8_t
@@ -143,6 +154,7 @@ classDiagram
     MemoryBus o-- Cartridge
     MemoryBus o-- WRAM
     MemoryBus o-- VRAM
+    MemoryBus o-- IOController
 
     CPU o-- MemoryBus
     CPU *-- Register
@@ -155,6 +167,11 @@ classDiagram
     CartridgeHeader *-- RamSize
     CartridgeHeader *-- CartridgeType
 
+    IOController o-- Joypad
+    IOController o-- APU
+    IOController o-- PPU
+    IOController o-- Timer
+    IOController o-- SerialPort
 
     PairRegister o-- Register
 
