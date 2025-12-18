@@ -53,14 +53,14 @@ const std::unordered_map<RamSize, std::string> kRamSizeToString = {
 CartridgeHeader Cartridge::ReadCartridgeHeader() {
     CartridgeHeader header;
 
-    header.cgb_flag = m_data.at(CartridgeHeaderAddresses::CGB_FLAG);
-    header.sgb_flag = m_data.at(CartridgeHeaderAddresses::SGB_FLAG);
-    header.destination_code = m_data.at(CartridgeHeaderAddresses::DESTINATION_CODE);
-    header.rom_size = static_cast<RomSize>(m_data.at(CartridgeHeaderAddresses::ROM_SIZE));
-    header.ram_size = static_cast<RamSize>(m_data.at(CartridgeHeaderAddresses::RAM_SIZE));
-    header.title = std::string(reinterpret_cast<char*>(m_data.data() + CartridgeHeaderAddresses::TITLE_START),
-                               CartridgeHeaderAddresses::TITLE_END - CartridgeHeaderAddresses::TITLE_START);
-    header.cartridge_type = static_cast<CartridgeType>(m_data.at(CartridgeHeaderAddresses::CARTRIDGE_TYPE));
+    header.cgb_flag = m_data.at(cartridge_header_addresses::CGB_FLAG);
+    header.sgb_flag = m_data.at(cartridge_header_addresses::SGB_FLAG);
+    header.destination_code = m_data.at(cartridge_header_addresses::DESTINATION_CODE);
+    header.rom_size = static_cast<RomSize>(m_data.at(cartridge_header_addresses::ROM_SIZE));
+    header.ram_size = static_cast<RamSize>(m_data.at(cartridge_header_addresses::RAM_SIZE));
+    header.title = std::string(reinterpret_cast<char*>(m_data.data() + cartridge_header_addresses::TITLE_START),
+                               cartridge_header_addresses::TITLE_END - cartridge_header_addresses::TITLE_START);
+    header.cartridge_type = static_cast<CartridgeType>(m_data.at(cartridge_header_addresses::CARTRIDGE_TYPE));
 
     return header;
 }
@@ -76,7 +76,7 @@ std::unique_ptr<MBC> Cartridge::GetMBC(CartridgeType type) {
     }
 }
 
-Cartridge::Cartridge(const std::filesystem::path rom_path) {
+Cartridge::Cartridge(const std::filesystem::path& rom_path) {
     std::ifstream file(rom_path);
     if (!file.is_open()) {
         throw std::runtime_error("Unable to open cartridge file: " + rom_path.string());

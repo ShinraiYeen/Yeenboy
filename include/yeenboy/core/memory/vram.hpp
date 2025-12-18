@@ -9,7 +9,7 @@ class VRAM final : public MMUModule {
     static constexpr size_t VRAM_SIZE = 0x2000;  // 8Kb
 
     VRAM();
-    ~VRAM() = default;
+    ~VRAM() override = default;
 
     uint8_t Read(size_t addr) const override;
     void Write(size_t addr, uint8_t val) override;

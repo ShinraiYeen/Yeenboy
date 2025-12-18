@@ -12,7 +12,7 @@
  * @brief Defines addresses for cartridge header information.
  *
  */
-namespace CartridgeHeaderAddresses {
+namespace cartridge_header_addresses {
 static constexpr size_t TITLE_START = 0x134;
 static constexpr size_t TITLE_END = 0x143;
 static constexpr size_t MANUFACTURER_CODE = 0x13F;
@@ -26,7 +26,7 @@ static constexpr size_t OLD_LICENSEE_CODE = 0x14B;
 static constexpr size_t MASK_ROM_VERSION_NUMBER = 0x14C;
 static constexpr size_t HEADER_CHECKSUM = 0x14D;
 static constexpr size_t GLOBAL_CHECKSUM = 0x14E;
-};  // namespace CartridgeHeaderAddresses
+};  // namespace cartridge_header_addresses
 
 /**
  * @brief Defines the type of cartridge and any hardware it may use.
@@ -125,7 +125,7 @@ struct CartridgeHeader {
 class Cartridge final : public MMUModule {
    public:
     Cartridge() = delete;
-    Cartridge(const std::filesystem::path rom_path);
+    explicit Cartridge(const std::filesystem::path& rom_path);
 
     ~Cartridge() {}
 
