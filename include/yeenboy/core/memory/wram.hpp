@@ -4,12 +4,12 @@
 
 #include "yeenboy/core/mmu_module.hpp"
 
-class WRAM : public MMUModule {
+class WRAM final : public MMUModule {
    public:
     static constexpr size_t WRAM_SIZE = 0x2000;  // 8Kb
 
     WRAM();
-    ~WRAM() = default;
+    ~WRAM() override = default;
 
     uint8_t Read(size_t addr) const override;
     void Write(size_t addr, uint8_t val) override;

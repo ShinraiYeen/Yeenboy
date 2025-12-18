@@ -5,6 +5,6 @@
 
 VRAM::VRAM() : MMUModule() { Logger::Debug("VRAM initialized"); }
 
-uint8_t VRAM::Read(size_t addr) const { return m_data.at(addr - defs::MMUAddresses::VRAM_START); }
+uint8_t VRAM::Read(size_t addr) const { return m_data.at(addr - defs::mmu_addresses::VRAM_START); }
 
-void VRAM::Write(size_t addr, uint8_t val) { m_data.at(addr - defs::MMUAddresses::VRAM_START) = val; }
+void VRAM::Write(size_t addr, uint8_t val) { m_data.at(addr - defs::mmu_addresses::VRAM_START) = val; }

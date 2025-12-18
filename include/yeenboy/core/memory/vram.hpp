@@ -4,7 +4,7 @@
 
 #include "yeenboy/core/mmu_module.hpp"
 
-class VRAM : public MMUModule {
+class VRAM final : public MMUModule {
    public:
     static constexpr size_t VRAM_SIZE = 0x2000;  // 8Kb
 

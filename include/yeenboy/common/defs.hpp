@@ -4,7 +4,7 @@
 namespace defs {
 static constexpr std::size_t BANK_SIZE = 0x4000;  // 16Kb
 
-namespace MMUAddresses {
+namespace mmu_addresses {
 static constexpr size_t ROM_BANK_00_START = 0x0000;
 static constexpr size_t ROM_BANK_00_END = 0x3FFF;
 static constexpr size_t ROM_BANK_NN_START = 0x4000;
@@ -26,5 +26,5 @@ static constexpr size_t IO_REGISTER_END = 0xFF7F;
 static constexpr size_t HIGH_RAM_START = 0xFF80;
 static constexpr size_t HIGH_RAM_END = 0xFFFE;
 static constexpr size_t INTERRUPT_ENABLE = 0xFFFF;
-}  // namespace MMUAddresses
+}  // namespace mmu_addresses
 }  // namespace defs

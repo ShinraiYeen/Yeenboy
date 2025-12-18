@@ -21,7 +21,7 @@ uint8_t MBC1::Read(size_t addr) const {
 
     else if (RANGE(addr, 0xA000, 0xBFFF)) {
         // Read RAM
-        return m_ram.at(addr - 0xA000);
+        return m_ram.at(addr - defs::mmu_addresses::EXTERNAL_RAM_START);
     }
 
     throw std::out_of_range("MBC1 range out of bounds");
@@ -50,7 +50,7 @@ void MBC1::Write(size_t addr, uint8_t val) {
 
     else if (RANGE(addr, 0xA000, 0xBFFF)) {
         // Write to RAM
-        m_ram.at(addr - 0xA000) = val;
+        m_ram.at(addr - defs::mmu_addresses::EXTERNAL_RAM_START) = val;
     }
 
     else {

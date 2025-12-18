@@ -45,6 +45,7 @@ classDiagram
         -m_hl: PairRegister
 
         -m_sp: Register~uint16_t~
+        -m_pc: Register~uint16_t~
 
     }
 
