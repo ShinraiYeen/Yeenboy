@@ -1,4 +1,4 @@
-#include "yeenboy/core/cpu.hpp"
+#include "yeenboy/core/cpu/cpu.hpp"
 
 #include "yeenboy/common/logger.hpp"
 

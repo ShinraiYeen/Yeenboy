@@ -5,6 +5,7 @@ find_package(SDL2 REQUIRED)
 file(GLOB SOURCE_FILES
     "yeenboy/*.cpp"
     "yeenboy/core/*.cpp"
+    "yeenboy/core/cpu/*.cpp"
     "yeenboy/core/memory/*.cpp"
     "yeenboy/core/cartridge/*.cpp"
     "yeenboy/core/cartridge/mbc/*.cpp"

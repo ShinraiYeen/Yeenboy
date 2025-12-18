@@ -3,7 +3,7 @@
 #include <filesystem>
 
 #include "yeenboy/core/cartridge/cartridge.hpp"
-#include "yeenboy/core/cpu.hpp"
+#include "yeenboy/core/cpu/cpu.hpp"
 #include "yeenboy/core/io_controller.hpp"
 #include "yeenboy/core/memory_bus.hpp"
 
