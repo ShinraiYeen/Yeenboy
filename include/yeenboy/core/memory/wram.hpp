@@ -6,7 +6,7 @@
 
 class WRAM final : public MMUModule {
    public:
-    static constexpr size_t WRAM_SIZE = 0x2000;  // 8Kb
+    static constexpr size_t kWramSize = 0x2000;  // 8Kb
 
     WRAM();
     ~WRAM() override = default;
@@ -15,5 +15,5 @@ class WRAM final : public MMUModule {
     void Write(size_t addr, uint8_t val) override;
 
    private:
-    std::array<uint8_t, WRAM_SIZE> m_data;
+    std::array<uint8_t, kWramSize> m_data;
 };

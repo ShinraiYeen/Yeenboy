@@ -38,32 +38,32 @@ uint8_t MemoryBus::Read(size_t addr) {
             return m_wram.Read(addr);
 
         default:
-            if (RANGE(addr, defs::mmu_addresses::ECHO_RAM_START, defs::mmu_addresses::ECHO_RAM_END)) {
+            if (RANGE(addr, defs::mmu_addresses::kEchoRamStart, defs::mmu_addresses::kEchoRamEnd)) {
                 // Echo RAM
-                return m_wram.Read(addr - (defs::mmu_addresses::ECHO_RAM_START - defs::mmu_addresses::WRAM_END));
+                return m_wram.Read(addr - (defs::mmu_addresses::kEchoRamStart - defs::mmu_addresses::kWramEnd));
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::OAM_START, defs::mmu_addresses::OAM_END)) {
+            else if (RANGE(addr, defs::mmu_addresses::kOamStart, defs::mmu_addresses::kOamEnd)) {
                 // Object attribute memory
                 throw std::runtime_error("OAM not implemented");
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::UNUSABLE_START, defs::mmu_addresses::UNUSABLE_END)) {
+            else if (RANGE(addr, defs::mmu_addresses::kUnusableStart, defs::mmu_addresses::kUnusableEnd)) {
                 // Unusable memory
                 throw std::runtime_error("Cannot read from unusable memory");
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::IO_REGISTER_START, defs::mmu_addresses::IO_REGISTER_END)) {
+            else if (RANGE(addr, defs::mmu_addresses::kIORegisterStart, defs::mmu_addresses::kIORegisterEnd)) {
                 // IO registers
                 return m_io_controller.Read(addr);
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::HIGH_RAM_START, defs::mmu_addresses::HIGH_RAM_END)) {
+            else if (RANGE(addr, defs::mmu_addresses::kHighRamStart, defs::mmu_addresses::kHighRamEnd)) {
                 // High RAM
                 throw std::runtime_error("High RAM not implemented");
             }
 
-            else if (addr == defs::mmu_addresses::INTERRUPT_ENABLE) {
+            else if (addr == defs::mmu_addresses::kInterruptEnable) {
                 // Interrupt enable register
                 throw std::runtime_error("Interrupt enable register not implemented");
             }
@@ -100,32 +100,32 @@ void MemoryBus::Write(size_t addr, uint8_t val) {
             break;
 
         default:
-            if (RANGE(addr, defs::mmu_addresses::ECHO_RAM_START, defs::mmu_addresses::ECHO_RAM_END)) {
+            if (RANGE(addr, defs::mmu_addresses::kEchoRamStart, defs::mmu_addresses::kEchoRamEnd)) {
                 // Echo RAM
-                m_wram.Write(addr - (defs::mmu_addresses::ECHO_RAM_START - defs::mmu_addresses::WRAM_END), val);
+                m_wram.Write(addr - (defs::mmu_addresses::kEchoRamStart - defs::mmu_addresses::kWramEnd), val);
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::OAM_START, defs::mmu_addresses::OAM_END)) {
+            else if (RANGE(addr, defs::mmu_addresses::kOamStart, defs::mmu_addresses::kOamEnd)) {
                 // Object attribute memory
                 throw std::runtime_error("OAM not implemented");
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::UNUSABLE_START, defs::mmu_addresses::UNUSABLE_END)) {
+            else if (RANGE(addr, defs::mmu_addresses::kUnusableStart, defs::mmu_addresses::kUnusableEnd)) {
                 // Unusable memory
                 throw std::runtime_error("Cannot read from unusable memory");
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::IO_REGISTER_START, defs::mmu_addresses::IO_REGISTER_END)) {
+            else if (RANGE(addr, defs::mmu_addresses::kIORegisterStart, defs::mmu_addresses::kIORegisterEnd)) {
                 // IO registers
                 m_io_controller.Write(addr, val);
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::HIGH_RAM_START, defs::mmu_addresses::HIGH_RAM_END)) {
+            else if (RANGE(addr, defs::mmu_addresses::kHighRamStart, defs::mmu_addresses::kHighRamEnd)) {
                 // High RAM
                 throw std::runtime_error("High RAM not implemented");
             }
 
-            else if (addr == defs::mmu_addresses::INTERRUPT_ENABLE) {
+            else if (addr == defs::mmu_addresses::kInterruptEnable) {
                 // Interrupt enable register
                 throw std::runtime_error("Interrupt enable register not implemented");
             }

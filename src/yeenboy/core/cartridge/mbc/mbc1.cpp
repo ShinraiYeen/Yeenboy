@@ -9,51 +9,64 @@
 MBC1::MBC1(std::vector<uint8_t>& rom, std::vector<uint8_t>& ram) : MBC(rom, ram) { Logger::Debug("Initialized MBC1"); }
 
 uint8_t MBC1::Read(size_t addr) const {
-    if (addr <= 0x3FFF) {
-        // Memory in this range is fixed
-        return m_rom.at(addr);
-    }
+    auto high_nibble = static_cast<uint8_t>((addr >> 12) & 0xF);
+    switch (high_nibble) {
+        case 0x0:
+        case 0x1:
+        case 0x2:
+        case 0x3:
+            return m_rom.at(addr);
+            break;
 
-    else if (RANGE(addr, 0x4000, 0x7FFF)) {
-        // Read banked rom memory
-        return m_rom.at(addr + (m_selected_rom_bank * defs::BANK_SIZE));
-    }
+        case 0x4:
+        case 0x5:
+        case 0x6:
+        case 0x7:
+            return m_rom.at(addr + (m_selected_rom_bank * defs::kBankSize));
 
-    else if (RANGE(addr, 0xA000, 0xBFFF)) {
-        // Read RAM
-        return m_ram.at(addr - defs::mmu_addresses::EXTERNAL_RAM_START);
-    }
+        case 0xA:
+        case 0xB:
+            return m_ram.at(addr - defs::mmu_addresses::kExternalRamStart);
+            break;
 
-    throw std::out_of_range("MBC1 range out of bounds");
+        default:
+            throw std::out_of_range("MBC1 range out of bounds");
+    }
 }
 
 void MBC1::Write(size_t addr, uint8_t val) {
-    if (addr <= 0x1FFF) {
-        // MBC1 RAM enable
-        throw std::runtime_error("MBC1 RAM enable not implemented");
-    }
+    auto high_nibble = static_cast<uint8_t>((addr >> 12) & 0xF);
+    switch (high_nibble) {
+        case 0x0:
+        case 0x1:
+            // MBC1 RAM enable
+            throw std::runtime_error("MBC1 RAM enable not implemented");
+            break;
 
-    else if (RANGE(addr, 0x2000, 0x3FFF)) {
-        // MB1 ROM bank select
-        throw std::runtime_error("MBC1 ROM bank select not implemented");
-    }
+        case 0x2:
+        case 0x3:
+            // MB1 ROM bank select
+            throw std::runtime_error("MBC1 ROM bank select not implemented");
+            break;
 
-    else if (RANGE(addr, 0x4000, 0x5FFF)) {
-        // MBC1 RAM bank select
-        throw std::runtime_error("MBC1 RAM bank select not implemented");
-    }
+        case 0x4:
+        case 0x5:
+            // MBC1 RAM bank select
+            throw std::runtime_error("MBC1 RAM bank select not implemented");
+            break;
 
-    else if (RANGE(addr, 0x6000, 0x7FFF)) {
-        // MBC1 banking mode select
-        m_banking_mode = val & 0b1 ? BankingMode::ADVANCED : BankingMode::SIMPLE;
-    }
+        case 0x6:
+        case 0x7:
+            // MBC1 banking mode select
+            m_banking_mode = val & 0b1 ? BankingMode::kAdvanced : BankingMode::kSimple;
+            break;
 
-    else if (RANGE(addr, 0xA000, 0xBFFF)) {
-        // Write to RAM
-        m_ram.at(addr - defs::mmu_addresses::EXTERNAL_RAM_START) = val;
-    }
+        case 0xA:
+        case 0xB:
+            // Write to RAM
+            m_ram.at(addr - defs::mmu_addresses::kExternalRamStart) = val;
 
-    else {
-        throw std::out_of_range("Address out of MBC1 range");
+        default:
+            throw std::out_of_range("MBC1 range out of bounds");
     }
 }

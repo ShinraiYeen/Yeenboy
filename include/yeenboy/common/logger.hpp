@@ -10,7 +10,7 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 
 #ifdef ENABLE_DEBUG_LOGGING
-static constexpr auto LOG_LEVEL = spdlog::level::debug;
+static constexpr auto kLogLevel = spdlog::level::debug;
 #else
 static constexpr auto LOG_LEVEL = spdlog::level::info;
 #endif
@@ -46,8 +46,8 @@ class Logger {
     static std::shared_ptr<spdlog::logger> CreateLogger() {
         auto logger = spdlog::stdout_color_mt("yeenboy");
         logger->set_pattern("[%Y-%m-%d %H:%M:%S] [%^%l%$] %v");
-        logger->set_level(LOG_LEVEL);
-        logger->flush_on(LOG_LEVEL);
+        logger->set_level(kLogLevel);
+        logger->flush_on(kLogLevel);
 
         return logger;
     }

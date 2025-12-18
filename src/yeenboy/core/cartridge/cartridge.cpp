@@ -9,67 +9,67 @@
 #include "yeenboy/core/cartridge/mbc/mbc1.hpp"
 
 const std::unordered_map<CartridgeType, std::string> kCartridgeTypeToString = {
-    {CartridgeType::ROM_ONLY, "ROM Only"},
-    {CartridgeType::MBC1, "MBC1"},
-    {CartridgeType::MBC1_RAM, "MBC1+RAM"},
-    {CartridgeType::MBC1_RAM_BATTERY, "MBC1+RAM+BATTERY"},
-    {CartridgeType::MBC2, "MBC2"},
-    {CartridgeType::MBC2_BATTERY, "MBC2+BATTERY"},
-    {CartridgeType::ROM_RAM, "ROM+RAM"},
-    {CartridgeType::ROM_RAM_BATTERY, "ROM+RAM+BATTERY"},
-    {CartridgeType::MMM01, "MMM01"},
-    {CartridgeType::MMM01_RAM, "MMM01+RAM"},
-    {CartridgeType::MMM01_RAM_BATTERY, "MMM01+RAM+BATTERY"},
-    {CartridgeType::MBC3_TIMER_BATTERY, "MBC3+TIMER+BATTERY"},
-    {CartridgeType::MBC3_TIMER_RAM_BATTERY, "MBC3+TIMER+RAM+BATTERY"},
-    {CartridgeType::MBC3, "MBC3"},
-    {CartridgeType::MBC3_RAM, "MBC3+RAM"},
-    {CartridgeType::MBC3_RAM_BATTERY, "MBC3+RAM+BATTERY"},
-    {CartridgeType::MBC5, "MBC5"},
-    {CartridgeType::MBC5_RAM, "MBC5+RAM"},
-    {CartridgeType::MBC5_RAM_BATTERY, "MBC5+RAM+BATTERY"},
-    {CartridgeType::MBC5_RUMBLE, "MBC5+RUMBLE"},
-    {CartridgeType::MBC5_RUMBLE_RAM, "MBC5+RUMBLE+RAM"},
-    {CartridgeType::MBC5_RUMBLE_RAM_BATTERY, "MBC5+RUMBLE+RAM+BATTERY"},
-    {CartridgeType::MBC6, "MBC6"},
-    {CartridgeType::MBC7_SENSOR_RUMBLE_RAM_BATTERY, "MBC7+SENSOR+RUMBLE+RAM+BATTERY"},
-    {CartridgeType::POCKET_CAMERA, "POCKET CAMERA"},
-    {CartridgeType::BANDAI_TAMA5, "BANDAI TAMA5"},
-    {CartridgeType::HuC3, "HuC3"},
-    {CartridgeType::HuC1_RAM_BATTERY, "HuC1+RAM+BATTERY"},
+    {CartridgeType::kRomOnly, "ROM Only"},
+    {CartridgeType::kMBC1, "MBC1"},
+    {CartridgeType::kMBC1Ram, "MBC1+RAM"},
+    {CartridgeType::kMBC1RamBattery, "MBC1+RAM+BATTERY"},
+    {CartridgeType::kMBC2, "MBC2"},
+    {CartridgeType::kMBC2Battery, "MBC2+BATTERY"},
+    {CartridgeType::kRomRam, "ROM+RAM"},
+    {CartridgeType::kRomRamBattery, "ROM+RAM+BATTERY"},
+    {CartridgeType::kMMM01, "MMM01"},
+    {CartridgeType::kMMM01Ram, "MMM01+RAM"},
+    {CartridgeType::kMMM01RamBattery, "MMM01+RAM+BATTERY"},
+    {CartridgeType::kMBC3TimerBattery, "MBC3+TIMER+BATTERY"},
+    {CartridgeType::kMBC3TimerRamBattery, "MBC3+TIMER+RAM+BATTERY"},
+    {CartridgeType::kMBC3, "MBC3"},
+    {CartridgeType::kMBC3Ram, "MBC3+RAM"},
+    {CartridgeType::kMBC3RamBattery, "MBC3+RAM+BATTERY"},
+    {CartridgeType::kMBC5, "MBC5"},
+    {CartridgeType::kMBC5Ram, "MBC5+RAM"},
+    {CartridgeType::kMBC5RamBattery, "MBC5+RAM+BATTERY"},
+    {CartridgeType::kMBC5Rumble, "MBC5+RUMBLE"},
+    {CartridgeType::kMBC5RumbleRam, "MBC5+RUMBLE+RAM"},
+    {CartridgeType::kMBC7SensorRumbleRamBattery, "MBC5+RUMBLE+RAM+BATTERY"},
+    {CartridgeType::kMBC6, "MBC6"},
+    {CartridgeType::kMBC7SensorRumbleRamBattery, "MBC7+SENSOR+RUMBLE+RAM+BATTERY"},
+    {CartridgeType::kPocketCamera, "POCKET CAMERA"},
+    {CartridgeType::kBandaiTama5, "BANDAI TAMA5"},
+    {CartridgeType::kHuC3, "HuC3"},
+    {CartridgeType::kHuC1RamBattery, "HuC1+RAM+BATTERY"},
 };
 
 const std::unordered_map<RomSize, std::string> kRomSizeToString = {
-    {RomSize::KB_32, "32Kb"},   {RomSize::KB_64, "64Kb"},   {RomSize::KB_128, "128Kb"}, {RomSize::KB_256, "256Kb"},
-    {RomSize::KB_512, "512Kb"}, {RomSize::MB_1, "1Mb"},     {RomSize::MB_2, "2Mb"},     {RomSize::MB_4, "4Mb"},
-    {RomSize::MB_8, "8Mb"},     {RomSize::MB_1_1, "1.1Mb"}, {RomSize::MB_1_2, "1.2Mb"}, {RomSize::MB_1_5, "1.5Mb"},
+    {RomSize::kKb32, "32Kb"},   {RomSize::kKb64, "64Kb"},  {RomSize::kKb128, "128Kb"}, {RomSize::kKb256, "256Kb"},
+    {RomSize::kKb512, "512Kb"}, {RomSize::kMb1, "1Mb"},    {RomSize::kMb2, "2Mb"},     {RomSize::kMb4, "4Mb"},
+    {RomSize::kMb8, "8Mb"},     {RomSize::kMb11, "1.1Mb"}, {RomSize::kMb12, "1.2Mb"},  {RomSize::kMb15, "1.5Mb"},
 };
 
 const std::unordered_map<RamSize, std::string> kRamSizeToString = {
-    {RamSize::NONE, "None"},  {RamSize::UNUSED, "Unused"}, {RamSize::KB_8, "8Kb"},
-    {RamSize::KB_32, "32Kb"}, {RamSize::KB_128, "128Kb"},  {RamSize::KB_64, "64Kb"},
+    {RamSize::kNone, "None"}, {RamSize::kUnused, "Unused"}, {RamSize::kKb8, "8Kb"},
+    {RamSize::kKb32, "32Kb"}, {RamSize::kKb128, "128Kb"},   {RamSize::kKb64, "64Kb"},
 };
 
 CartridgeHeader Cartridge::ReadCartridgeHeader() {
     CartridgeHeader header;
 
-    header.cgb_flag = m_data.at(cartridge_header_addresses::CGB_FLAG);
-    header.sgb_flag = m_data.at(cartridge_header_addresses::SGB_FLAG);
-    header.destination_code = m_data.at(cartridge_header_addresses::DESTINATION_CODE);
-    header.rom_size = static_cast<RomSize>(m_data.at(cartridge_header_addresses::ROM_SIZE));
-    header.ram_size = static_cast<RamSize>(m_data.at(cartridge_header_addresses::RAM_SIZE));
-    header.title = std::string(reinterpret_cast<char*>(m_data.data() + cartridge_header_addresses::TITLE_START),
-                               cartridge_header_addresses::TITLE_END - cartridge_header_addresses::TITLE_START);
-    header.cartridge_type = static_cast<CartridgeType>(m_data.at(cartridge_header_addresses::CARTRIDGE_TYPE));
+    header.cgb_flag = m_data.at(cartridge_header_addresses::kCgbFlag);
+    header.sgb_flag = m_data.at(cartridge_header_addresses::kSgbFlag);
+    header.destination_code = m_data.at(cartridge_header_addresses::kDestinationCode);
+    header.rom_size = static_cast<RomSize>(m_data.at(cartridge_header_addresses::kRomSize));
+    header.ram_size = static_cast<RamSize>(m_data.at(cartridge_header_addresses::kRamSize));
+    header.title = std::string(reinterpret_cast<char*>(m_data.data() + cartridge_header_addresses::kTitleStart),
+                               cartridge_header_addresses::kTitleEnd - cartridge_header_addresses::kTitleStart);
+    header.cartridge_type = static_cast<CartridgeType>(m_data.at(cartridge_header_addresses::kCartridgeType));
 
     return header;
 }
 
 std::unique_ptr<MBC> Cartridge::GetMBC(CartridgeType type) {
     switch (type) {
-        case CartridgeType::MBC1:
-        case CartridgeType::MBC1_RAM:
-        case CartridgeType::MBC1_RAM_BATTERY:
+        case CartridgeType::kMBC1:
+        case CartridgeType::kMBC1Ram:
+        case CartridgeType::kMBC1RamBattery:
             return std::make_unique<MBC1>(m_data, m_sram);
         default:
             throw std::runtime_error("Unsupported cartridge type");

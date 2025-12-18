@@ -6,7 +6,7 @@
 
 class VRAM final : public MMUModule {
    public:
-    static constexpr size_t VRAM_SIZE = 0x2000;  // 8Kb
+    static constexpr size_t kVramSize = 0x2000;  // 8Kb
 
     VRAM();
     ~VRAM() override = default;
@@ -15,5 +15,5 @@ class VRAM final : public MMUModule {
     void Write(size_t addr, uint8_t val) override;
 
    private:
-    std::array<uint8_t, VRAM_SIZE> m_data;
+    std::array<uint8_t, kVramSize> m_data;
 };

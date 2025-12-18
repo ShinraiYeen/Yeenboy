@@ -9,11 +9,11 @@ TEST(Memory, BasicMemory) {
     WRAM wram;
     VRAM vram;
 
-    wram.Write(defs::mmu_addresses::WRAM_START + 2, 42);
-    EXPECT_EQ(wram.Read(defs::mmu_addresses::WRAM_START + 2), 42);
+    wram.Write(defs::mmu_addresses::kWramStart + 2, 42);
+    EXPECT_EQ(wram.Read(defs::mmu_addresses::kWramStart + 2), 42);
 
-    vram.Write(defs::mmu_addresses::VRAM_START + 42, 67);
-    EXPECT_EQ(vram.Read(defs::mmu_addresses::VRAM_START + 42), 67);
+    vram.Write(defs::mmu_addresses::kVramStart + 42, 67);
+    EXPECT_EQ(vram.Read(defs::mmu_addresses::kVramStart + 42), 67);
 }
 
 TEST(Memory, NegativeWRAM) {

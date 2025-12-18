@@ -5,7 +5,9 @@
 
 #include "yeenboy/yeenboy.hpp"
 
+namespace {
 void PrintUsage(char* command) { printf("Usage: %s <rom_file>\n", command); }
+}  // namespace
 
 int main(int argc, char** argv) {
     if (argc != 2) {

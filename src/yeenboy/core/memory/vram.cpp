@@ -3,8 +3,8 @@
 #include "yeenboy/common/defs.hpp"
 #include "yeenboy/common/logger.hpp"
 
-VRAM::VRAM() : MMUModule() { Logger::Debug("VRAM initialized"); }
+VRAM::VRAM() { Logger::Debug("VRAM initialized"); }
 
-uint8_t VRAM::Read(size_t addr) const { return m_data.at(addr - defs::mmu_addresses::VRAM_START); }
+uint8_t VRAM::Read(size_t addr) const { return m_data.at(addr - defs::mmu_addresses::kVramStart); }
 
-void VRAM::Write(size_t addr, uint8_t val) { m_data.at(addr - defs::mmu_addresses::VRAM_START) = val; }
+void VRAM::Write(size_t addr, uint8_t val) { m_data.at(addr - defs::mmu_addresses::kVramStart) = val; }

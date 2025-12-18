@@ -9,11 +9,11 @@
  */
 class CPU {
    public:
-    static constexpr unsigned int T_CLOCK_SPEED_HZ = 4194304;               // 4.194304 MHz
-    static constexpr unsigned int M_CLOCK_SPEED_HZ = T_CLOCK_SPEED_HZ / 4;  // 1.048576 MHz
+    static constexpr unsigned int kTClockSpeedHz = 4194304;             // 4.194304 MHz
+    static constexpr unsigned int kMClockSpeedHz = kTClockSpeedHz / 4;  // 1.048576 MHz
 
     CPU() = delete;
-    CPU(MemoryBus& mem);
+    explicit CPU(MemoryBus& mem);
     ~CPU() = default;
 
    private:

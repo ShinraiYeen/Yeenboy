@@ -5,8 +5,8 @@
 class MBC1 final : public MBC {
    public:
     enum class BankingMode {
-        SIMPLE,
-        ADVANCED,
+        kSimple,
+        kAdvanced,
     };
 
     MBC1(std::vector<uint8_t>& rom, std::vector<uint8_t>& ram);
@@ -17,7 +17,7 @@ class MBC1 final : public MBC {
 
    private:
     uint8_t m_selected_rom_bank = 0;
-    bool m_ram_enable = 0;
+    bool m_ram_enable = false;
     uint8_t m_selected_ram_bank = 0;
-    BankingMode m_banking_mode = BankingMode::SIMPLE;
+    BankingMode m_banking_mode = BankingMode::kSimple;
 };

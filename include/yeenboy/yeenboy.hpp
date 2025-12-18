@@ -17,7 +17,7 @@
 class Yeenboy {
    public:
     Yeenboy() = delete;
-    Yeenboy(const std::filesystem::path& path);
+    explicit Yeenboy(const std::filesystem::path& path);
     ~Yeenboy() = default;
 
    private:

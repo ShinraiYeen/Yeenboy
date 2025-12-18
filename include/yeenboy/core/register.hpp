@@ -14,12 +14,12 @@ template <typename T, typename = std::enable_if_t<std::is_integral_v<T> && std::
 class Register {
    public:
     Register() = default;
-    Register(T val) : m_val(val) {}
+    explicit Register(T val) : m_val(val) {}
     ~Register() = default;
 
-    inline T Value() const { return m_val; }
-    inline void Set(T val) { m_val = val; }
-    inline int BitWidth() const { return sizeof(T) * 8; }
+    T Value() const { return m_val; }
+    void Set(T val) { m_val = val; }
+    int BitWidth() const { return sizeof(T) * 8; }
 
    protected:
     T m_val = 0;
@@ -54,21 +54,21 @@ class PairRegister {
  */
 class FlagRegister : public Register<uint8_t> {
    public:
-    static constexpr int ZERO_FLAG_BIT = 7;
-    static constexpr int SUBTRACT_FLAG_BIT = 6;
-    static constexpr int HALF_CARRY_FLAG_BIT = 5;
-    static constexpr int CARRY_FLAG_BIT = 4;
+    static constexpr int kZeroFlagBit = 7;
+    static constexpr int kSubtractFlagBit = 6;
+    static constexpr int kHalfCarryFlagBit = 5;
+    static constexpr int kCarryFlagBit = 4;
 
     FlagRegister() = default;
     ~FlagRegister() = default;
 
-    inline bool Zero() const { return util::CheckBit(m_val, ZERO_FLAG_BIT); };
-    inline bool Subtract() const { return util::CheckBit(m_val, SUBTRACT_FLAG_BIT); }
-    inline bool HalfCarry() const { return util::CheckBit(m_val, HALF_CARRY_FLAG_BIT); }
-    inline bool Carry() const { return util::CheckBit(m_val, CARRY_FLAG_BIT); }
+    bool Zero() const { return util::CheckBit(m_val, kZeroFlagBit); };
+    bool Subtract() const { return util::CheckBit(m_val, kSubtractFlagBit); }
+    bool HalfCarry() const { return util::CheckBit(m_val, kHalfCarryFlagBit); }
+    bool Carry() const { return util::CheckBit(m_val, kCarryFlagBit); }
 
-    inline void SetZero(bool set) { m_val = util::SetBitTo(m_val, ZERO_FLAG_BIT, set); }
-    inline void SetSubtract(bool set) { m_val = util::SetBitTo(m_val, SUBTRACT_FLAG_BIT, set); }
-    inline void SetHalfCarry(bool set) { m_val = util::SetBitTo(m_val, HALF_CARRY_FLAG_BIT, set); }
-    inline void SetCarry(bool set) { m_val = util::SetBitTo(m_val, CARRY_FLAG_BIT, set); }
+    void SetZero(bool set) { m_val = util::SetBitTo(m_val, kZeroFlagBit, set); }
+    void SetSubtract(bool set) { m_val = util::SetBitTo(m_val, kSubtractFlagBit, set); }
+    void SetHalfCarry(bool set) { m_val = util::SetBitTo(m_val, kHalfCarryFlagBit, set); }
+    void SetCarry(bool set) { m_val = util::SetBitTo(m_val, kCarryFlagBit, set); }
 };
