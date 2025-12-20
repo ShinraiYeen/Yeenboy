@@ -55,7 +55,7 @@ class PairRegister {
 class FlagRegister : public Register<uint8_t> {
    public:
     static constexpr int kZeroFlagBit = 7;
-    static constexpr int kSubtractFlagBit = 6;
+    static constexpr int kNegativeFlagBit = 6;
     static constexpr int kHalfCarryFlagBit = 5;
     static constexpr int kCarryFlagBit = 4;
 
@@ -63,12 +63,12 @@ class FlagRegister : public Register<uint8_t> {
     ~FlagRegister() = default;
 
     bool Zero() const { return util::CheckBit(m_val, kZeroFlagBit); };
-    bool Subtract() const { return util::CheckBit(m_val, kSubtractFlagBit); }
+    bool Negative() const { return util::CheckBit(m_val, kNegativeFlagBit); }
     bool HalfCarry() const { return util::CheckBit(m_val, kHalfCarryFlagBit); }
     bool Carry() const { return util::CheckBit(m_val, kCarryFlagBit); }
 
     void SetZero(bool set) { m_val = util::SetBitTo(m_val, kZeroFlagBit, set); }
-    void SetSubtract(bool set) { m_val = util::SetBitTo(m_val, kSubtractFlagBit, set); }
+    void SetNegative(bool set) { m_val = util::SetBitTo(m_val, kNegativeFlagBit, set); }
     void SetHalfCarry(bool set) { m_val = util::SetBitTo(m_val, kHalfCarryFlagBit, set); }
     void SetCarry(bool set) { m_val = util::SetBitTo(m_val, kCarryFlagBit, set); }
 };
