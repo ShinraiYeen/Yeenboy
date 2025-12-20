@@ -1,9 +1,10 @@
 #include <gtest/gtest.h>
 
+#include <yeenboy/common/types.hpp>
 #include <yeenboy/core/register.hpp>
 
 TEST(Register, BasicByteRegister) {
-    Register<uint8_t> reg;
+    Register<u8> reg;
     EXPECT_EQ(reg.Value(), 0);
     EXPECT_EQ(reg.BitWidth(), 8);
     reg.Set(42);
@@ -11,8 +12,8 @@ TEST(Register, BasicByteRegister) {
 }
 
 TEST(Register, BasicPairRegister) {
-    Register<uint8_t> a;
-    Register<uint8_t> b;
+    Register<u8> a;
+    Register<u8> b;
     PairRegister reg(a, b);
 
     EXPECT_EQ(reg.Value(), 0);

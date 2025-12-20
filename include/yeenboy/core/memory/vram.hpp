@@ -2,6 +2,7 @@
 
 #include <array>
 
+#include "yeenboy/common/types.hpp"
 #include "yeenboy/core/mmu_module.hpp"
 
 class VRAM final : public MMUModule {
@@ -11,9 +12,9 @@ class VRAM final : public MMUModule {
     VRAM();
     ~VRAM() override = default;
 
-    uint8_t Read(size_t addr) const override;
-    void Write(size_t addr, uint8_t val) override;
+    u8 Read(size_t addr) const override;
+    void Write(size_t addr, u8 val) override;
 
    private:
-    std::array<uint8_t, kVramSize> m_data;
+    std::array<u8, kVramSize> m_data;
 };

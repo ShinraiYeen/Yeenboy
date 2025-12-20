@@ -5,6 +5,6 @@
 
 WRAM::WRAM() { Logger::Debug("WRAM initialized"); }
 
-uint8_t WRAM::Read(size_t addr) const { return m_data.at(addr - defs::mmu_addresses::kWramStart); }
+u8 WRAM::Read(size_t addr) const { return m_data.at(addr - defs::mmu_addresses::kWramStart); }
 
-void WRAM::Write(size_t addr, uint8_t val) { m_data.at(addr - defs::mmu_addresses::kWramStart) = val; }
+void WRAM::Write(size_t addr, u8 val) { m_data.at(addr - defs::mmu_addresses::kWramStart) = val; }

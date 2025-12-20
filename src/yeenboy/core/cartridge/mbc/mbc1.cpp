@@ -6,10 +6,10 @@
 #include "yeenboy/common/logger.hpp"
 #include "yeenboy/common/utils.hpp"
 
-MBC1::MBC1(std::vector<uint8_t>& rom, std::vector<uint8_t>& ram) : MBC(rom, ram) { Logger::Debug("Initialized MBC1"); }
+MBC1::MBC1(std::vector<u8>& rom, std::vector<u8>& ram) : MBC(rom, ram) { Logger::Debug("Initialized MBC1"); }
 
-uint8_t MBC1::Read(size_t addr) const {
-    auto high_nibble = static_cast<uint8_t>((addr >> 12) & 0xF);
+u8 MBC1::Read(size_t addr) const {
+    auto high_nibble = static_cast<u8>((addr >> 12) & 0xF);
     switch (high_nibble) {
         case 0x0:
         case 0x1:
@@ -34,8 +34,8 @@ uint8_t MBC1::Read(size_t addr) const {
     }
 }
 
-void MBC1::Write(size_t addr, uint8_t val) {
-    auto high_nibble = static_cast<uint8_t>((addr >> 12) & 0xF);
+void MBC1::Write(size_t addr, u8 val) {
+    auto high_nibble = static_cast<u8>((addr >> 12) & 0xF);
     switch (high_nibble) {
         case 0x0:
         case 0x1:

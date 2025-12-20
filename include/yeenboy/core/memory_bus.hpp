@@ -20,8 +20,8 @@ class MemoryBus {
     // Destructors
     ~MemoryBus() = default;
 
-    uint8_t Read(size_t addr);
-    void Write(size_t addr, uint8_t val);
+    u8 Read(size_t addr);
+    void Write(size_t addr, u8 val);
 
    private:
     WRAM& m_wram;            // Work RAM

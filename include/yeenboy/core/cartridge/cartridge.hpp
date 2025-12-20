@@ -3,8 +3,8 @@
 #include <filesystem>
 #include <memory>
 #include <unordered_map>
-#include <vector>
 
+#include "yeenboy/common/types.hpp"
 #include "yeenboy/core/cartridge/mbc/mbc.hpp"
 #include "yeenboy/core/mmu_module.hpp"
 
@@ -32,7 +32,7 @@ static constexpr size_t kGlobalChecksum = 0x14E;
  * @brief Defines the type of cartridge and any hardware it may use.
  *
  */
-enum class CartridgeType : uint8_t {
+enum class CartridgeType : u8 {
     kRomOnly = 0x00,
     kMBC1 = 0x01,
     kMBC1Ram = 0x02,
@@ -67,7 +67,7 @@ enum class CartridgeType : uint8_t {
  * @brief Defines cartridge codes for defining ROM size.
  *
  */
-enum class RomSize : uint8_t {
+enum class RomSize : u8 {
     kKb32 = 0x00,
     kKb64 = 0x01,
     kKb128 = 0x02,
@@ -86,7 +86,7 @@ enum class RomSize : uint8_t {
  * @brief Defines cartridge codes for defining RAM size.
  *
  */
-enum class RamSize : uint8_t {
+enum class RamSize : u8 {
     kNone = 0x00,
     kUnused = 0x01,
     kKb8 = 0x02,
@@ -107,12 +107,12 @@ extern const std::unordered_map<RamSize, size_t> kRamSizeToNumBanks;
  */
 struct CartridgeHeader {
     std::string title;             // Cartridge title
-    uint8_t cgb_flag;              // Gameboy Color support flag
-    uint8_t sgb_flag;              // Super Gameboy support flag
+    u8 cgb_flag;                   // Gameboy Color support flag
+    u8 sgb_flag;                   // Super Gameboy support flag
     CartridgeType cartridge_type;  // Cartridge MBC type
     RomSize rom_size;              // ROM size
     RamSize ram_size;              // RAM size
-    uint8_t destination_code;      // Destination code
+    u8 destination_code;           // Destination code
 };
 
 /**
@@ -129,12 +129,12 @@ class Cartridge final : public MMUModule {
 
     ~Cartridge() {}
 
-    uint8_t Read(size_t addr) const override;
-    void Write(size_t addr, uint8_t val) override;
+    u8 Read(size_t addr) const override;
+    void Write(size_t addr, u8 val) override;
 
    private:
-    std::vector<uint8_t> m_data;  // Cartridge ROM
-    std::vector<uint8_t> m_sram;  // Cartridge SRAM
+    std::vector<u8> m_data;  // Cartridge ROM
+    std::vector<u8> m_sram;  // Cartridge SRAM
     CartridgeHeader m_header;
     std::unique_ptr<MBC> m_mbc;  // Memory bank controller
 

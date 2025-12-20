@@ -1,7 +1,6 @@
 #pragma once
 
-#include <cstdint>
-
+#include "yeenboy/common/types.hpp"
 #include "yeenboy/core/memory_bus.hpp"
 #include "yeenboy/core/register.hpp"
 
@@ -48,27 +47,27 @@ class CPU {
     MemoryBus& m_mem;  // Memory bus
 
     // CPU registers
-    Register<uint8_t> m_a, m_b, m_c, m_d, m_e, m_h, m_l;  // Standard 8-bit registers
-    Register<uint16_t> m_pc;                              // Program counter
-    PairRegister m_af, m_bc, m_de, m_hl;                  // Pair registers
-    Register<uint16_t> m_sp;                              // Stack pointer
-    FlagRegister m_f;                                     // Flag register
+    Register<u8> m_a, m_b, m_c, m_d, m_e, m_h, m_l;  // Standard 8-bit registers
+    Register<u16> m_pc;                              // Program counter
+    PairRegister m_af, m_bc, m_de, m_hl;             // Pair registers
+    Register<u16> m_sp;                              // Stack pointer
+    FlagRegister m_f;                                // Flag register
 
     // CPU flags
     bool m_halt_cpu = false;
 
     // === General CPU Helpers ===
 
-    void ExecuteOpcode(uint8_t opcode);
-    void ExecuteRegularOpcode(uint8_t opcode);
-    void ExecuteCbOpcode(uint8_t opcode);
+    void ExecuteOpcode(u8 opcode);
+    void ExecuteRegularOpcode(u8 opcode);
+    void ExecuteCbOpcode(u8 opcode);
 
     /**
      * @brief Returns the byte the PC (Program counter) is referring to in memory and increments the PC register.
      *
      * @return The byte being pointed to by the PC register before being incremented.
      */
-    uint8_t GetPCByte();
+    u8 GetPCByte();
 
     // === Opcode Helpers ===
 
@@ -78,21 +77,21 @@ class CPU {
     int OpcodeHALT();  // Halt CPU until interrupt occurs
 
     // Load and store helpers
-    int OpcodeLD(PairRegister& store_addr, Register<uint8_t>& load_reg);      // Write byte register to memory
-    int OpcodeLD(Register<uint8_t>& store_reg, PairRegister& load_addr);      // Load from memory into byte register
-    int OpcodeLD(Register<uint8_t>& store_reg, Register<uint8_t>& load_reg);  // Copy into other byte register
+    int OpcodeLD(PairRegister& store_addr, Register<u8>& load_reg);  // Write byte register to memory
+    int OpcodeLD(Register<u8>& store_reg, PairRegister& load_addr);  // Load from memory into byte register
+    int OpcodeLD(Register<u8>& store_reg, Register<u8>& load_reg);   // Copy into other byte register
 
     // Arithmetic logic unit
-    int OpcodeINC(Register<uint8_t>& reg);  // Increment
-    int OpcodeDEC(Register<uint8_t>& reg);  // Decrement
-    int OpcodeADD(Register<uint8_t>& reg);  // Addition
-    int OpcodeSUB(Register<uint8_t>& reg);  // Subtraction
-    int OpcodeADC(Register<uint8_t>& reg);  // Addition with carry
-    int OpcodeSBC(Register<uint8_t>& reg);  // Subtraction with carry
-    int OpcodeAND(Register<uint8_t>& reg);  // Bitwise AND
-    int OpcodeXOR(Register<uint8_t>& reg);  // Bitwise XOR
-    int OpcodeOR(Register<uint8_t>& reg);   // Bitwise OR
-    int OpcodeCP(Register<uint8_t>& reg);   // Comparison
+    int OpcodeINC(Register<u8>& reg);  // Increment
+    int OpcodeDEC(Register<u8>& reg);  // Decrement
+    int OpcodeADD(Register<u8>& reg);  // Addition
+    int OpcodeSUB(Register<u8>& reg);  // Subtraction
+    int OpcodeADC(Register<u8>& reg);  // Addition with carry
+    int OpcodeSBC(Register<u8>& reg);  // Subtraction with carry
+    int OpcodeAND(Register<u8>& reg);  // Bitwise AND
+    int OpcodeXOR(Register<u8>& reg);  // Bitwise XOR
+    int OpcodeOR(Register<u8>& reg);   // Bitwise OR
+    int OpcodeCP(Register<u8>& reg);   // Comparison
 
     // Stack operations
     int OpcodePOP(PairRegister& reg);   // Stack POP
@@ -102,13 +101,13 @@ class CPU {
     int OpcodeRCLA();
     int OpcodeRLA();
     int OpcodeRRCA();
-    int OpcodeRLC(Register<uint8_t>& reg);
-    int OpcodeRL(Register<uint8_t>& reg);
-    int OpcodeRRC(Register<uint8_t>& reg);
-    int OpcodeRR(Register<uint8_t>& reg);
-    int OpcodeSLA(Register<uint8_t>& reg);
-    int OpcodeSRA(Register<uint8_t>& reg);
-    int OpcodeSRL(Register<uint8_t>& reg);
+    int OpcodeRLC(Register<u8>& reg);
+    int OpcodeRL(Register<u8>& reg);
+    int OpcodeRRC(Register<u8>& reg);
+    int OpcodeRR(Register<u8>& reg);
+    int OpcodeSLA(Register<u8>& reg);
+    int OpcodeSRA(Register<u8>& reg);
+    int OpcodeSRL(Register<u8>& reg);
 
     // Branching
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cstdint>
 #include <type_traits>
 
 #include "yeenboy/common/utils.hpp"
@@ -35,15 +34,15 @@ class Register {
  */
 class PairRegister {
    public:
-    PairRegister(Register<uint8_t>& high, Register<uint8_t>& low);
+    PairRegister(Register<u8>& high, Register<u8>& low);
     ~PairRegister() = default;
 
-    uint16_t Value() const;
-    void Set(uint16_t val);
+    u16 Value() const;
+    void Set(u16 val);
 
    private:
-    Register<uint8_t>& m_high;
-    Register<uint8_t>& m_low;
+    Register<u8>& m_high;
+    Register<u8>& m_low;
 };
 
 /**
@@ -52,7 +51,7 @@ class PairRegister {
  * Defines the flag register for the Gameboy's CPU. This is an 8-bit register with its corresponding flags defined at
  * the highest 4 bits of the register's value.
  */
-class FlagRegister : public Register<uint8_t> {
+class FlagRegister : public Register<u8> {
    public:
     static constexpr int kZeroFlagBit = 7;
     static constexpr int kNegativeFlagBit = 6;

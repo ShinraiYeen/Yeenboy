@@ -101,5 +101,5 @@ Cartridge::Cartridge(const std::filesystem::path& rom_path) {
     Logger::Debug("Cartridge initialized");
 }
 
-void Cartridge::Write(size_t addr, uint8_t val) { m_mbc->Write(addr, val); }
-uint8_t Cartridge::Read(size_t addr) const { return m_mbc->Read(addr); }
+void Cartridge::Write(size_t addr, u8 val) { m_mbc->Write(addr, val); }
+u8 Cartridge::Read(size_t addr) const { return m_mbc->Read(addr); }

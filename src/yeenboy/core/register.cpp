@@ -1,10 +1,10 @@
 #include "yeenboy/core/register.hpp"
 
-PairRegister::PairRegister(Register<uint8_t>& high, Register<uint8_t>& low) : m_high(high), m_low(low) {}
+PairRegister::PairRegister(Register<u8>& high, Register<u8>& low) : m_high(high), m_low(low) {}
 
-uint16_t PairRegister::Value() const { return util::CombineBytes(m_high.Value(), m_low.Value()); }
+u16 PairRegister::Value() const { return util::CombineBytes(m_high.Value(), m_low.Value()); }
 
-void PairRegister::Set(uint16_t val) {
+void PairRegister::Set(u16 val) {
     m_high.Set(util::ExtractHigh(val));
     m_low.Set(util::ExtractLow(val));
 }

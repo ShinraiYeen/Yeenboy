@@ -20,25 +20,25 @@ int CPU::OpcodeHALT() {
     return 1;
 }
 
-int CPU::OpcodeLD(PairRegister& store_addr, Register<uint8_t>& load_reg) {
+int CPU::OpcodeLD(PairRegister& store_addr, Register<u8>& load_reg) {
     m_mem.Write(store_addr.Value(), load_reg.Value());
     return 2;
 }
 
-int CPU::OpcodeLD(Register<uint8_t>& store_reg, PairRegister& load_addr) {
+int CPU::OpcodeLD(Register<u8>& store_reg, PairRegister& load_addr) {
     store_reg.Set(m_mem.Read(load_addr.Value()));
     return 2;
 }
 
-int CPU::OpcodeLD(Register<uint8_t>& store_reg, Register<uint8_t>& load_reg) {
+int CPU::OpcodeLD(Register<u8>& store_reg, Register<u8>& load_reg) {
     (void)m_a;
     store_reg.Set(load_reg.Value());
     return 1;
 }
 
-int CPU::OpcodeINC(Register<uint8_t>& reg) {
-    const uint8_t original_val = reg.Value();
-    const uint8_t result = original_val + 1;
+int CPU::OpcodeINC(Register<u8>& reg) {
+    const u8 original_val = reg.Value();
+    const u8 result = original_val + 1;
 
     m_f.SetZero(result == 0x00);
     m_f.SetNegative(false);
@@ -49,9 +49,9 @@ int CPU::OpcodeINC(Register<uint8_t>& reg) {
     return 1;
 }
 
-int CPU::OpcodeDEC(Register<uint8_t>& reg) {
-    const uint8_t original_val = reg.Value();
-    const uint8_t result = original_val - 1;
+int CPU::OpcodeDEC(Register<u8>& reg) {
+    const u8 original_val = reg.Value();
+    const u8 result = original_val - 1;
 
     m_f.SetZero(result == 0x00);
     m_f.SetNegative(true);

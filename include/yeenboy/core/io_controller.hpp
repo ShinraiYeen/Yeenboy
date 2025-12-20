@@ -1,8 +1,8 @@
 #pragma once
 
 #include <cstddef>
-#include <cstdint>
 
+#include "yeenboy/common/types.hpp"
 #include "yeenboy/core/mmu_module.hpp"
 
 class IOController : public MMUModule {
@@ -10,8 +10,8 @@ class IOController : public MMUModule {
     IOController() = default;
     ~IOController() = default;
 
-    uint8_t Read(size_t addr) const override;
-    void Write(size_t addr, uint8_t val) override;
+    u8 Read(size_t addr) const override;
+    void Write(size_t addr, u8 val) override;
 
    private:
 };

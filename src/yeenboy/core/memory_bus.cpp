@@ -13,7 +13,7 @@ MemoryBus::MemoryBus(WRAM& wram, VRAM& vram, Cartridge& cartridge, IOController&
     Logger::Debug("Memory bus initialized");
 }
 
-uint8_t MemoryBus::Read(size_t addr) {
+u8 MemoryBus::Read(size_t addr) {
     size_t high_nibble = (addr >> 12) & 0xF;
 
     switch (high_nibble) {
@@ -72,7 +72,7 @@ uint8_t MemoryBus::Read(size_t addr) {
     }
 }
 
-void MemoryBus::Write(size_t addr, uint8_t val) {
+void MemoryBus::Write(size_t addr, u8 val) {
     size_t high_nibble = (addr >> 12) & 0xF;
 
     switch (high_nibble) {
