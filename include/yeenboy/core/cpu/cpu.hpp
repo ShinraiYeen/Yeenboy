@@ -73,9 +73,10 @@ class CPU {
     // === Opcode Helpers ===
 
     // Misc/control
-    int OpcodeNOP();   // No-op
-    int OpcodeSTOP();  // Halt CPU
-    int OpcodeHALT();  // Halt CPU until interrupt occurs
+    int OpcodeNOP();      // No-op
+    int OpcodeSTOP();     // Halt CPU
+    int OpcodeHALT();     // Halt CPU until interrupt occurs
+    int OpcodeILLEGAL();  // Illegal opcodes (not part of documentation, more for me)
 
     // Load and store helpers
 
@@ -144,6 +145,7 @@ class CPU {
 
     int OpcodeJP();
     int OpcodeJP(bool condition_result);
+    int OpcodeJP(Register<u16>& reg);
 
     void InternalJumpRelative(i8 val);
     int OpcodeJR();

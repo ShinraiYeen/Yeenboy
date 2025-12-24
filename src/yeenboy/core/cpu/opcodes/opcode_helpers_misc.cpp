@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "yeenboy/common/logger.hpp"
 #include "yeenboy/core/cpu/cpu.hpp"
 
@@ -17,4 +19,9 @@ int CPU::OpcodeHALT() {
     // operations
     m_halt_cpu = true;
     return 1;
+}
+
+int CPU::OpcodeILLEGAL() {
+    throw std::runtime_error("Illegal opcode encountered");
+    return 0;
 }

@@ -17,6 +17,11 @@ int CPU::OpcodeJP(bool condition_result) {
     return 3;
 }
 
+int CPU::OpcodeJP(Register<u16>& reg) {
+    InternalJump(reg.Value());
+    return 1;
+}
+
 void CPU::InternalJumpRelative(i8 val) { m_pc.Set(m_pc.Value() + val); }
 
 int CPU::OpcodeJR() {
