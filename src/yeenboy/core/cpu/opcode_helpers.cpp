@@ -61,3 +61,16 @@ int CPU::OpcodeDEC(Register<u8>& reg) {
 
     return 1;
 }
+
+int CPU::OpcodeADD(Register<u8>& reg) {
+    // TODO(shinraiyeen): Fix this
+
+    const u8 original_val = m_a.Value();
+    const u8 result = original_val + reg.Value();
+
+    m_f.SetZero(result == 0x00);
+    m_f.SetNegative(false);
+    m_f.SetCarry(original_val > result);
+
+    return 1;
+}

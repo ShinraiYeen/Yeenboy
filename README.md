@@ -9,7 +9,7 @@ An in-development Gameboy emulator written in C++. Hopefully it's fast, I dunno.
 
 2. Install required dependencies.
     ```shell
-    sudo apt install libsdl2-dev build-essential cmake
+    sudo apt install libsdl3-dev build-essential cmake
     ```
 
 3. Build the project.

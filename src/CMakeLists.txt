@@ -1,6 +1,6 @@
 project(yeenboy)
 
-find_package(SDL2 REQUIRED)
+find_package(SDL3 REQUIRED)
 
 file(GLOB SOURCE_FILES
     "yeenboy/*.cpp"
@@ -13,7 +13,7 @@ file(GLOB SOURCE_FILES
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic)
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../include")
-target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 spdlog)
+target_link_libraries(${PROJECT_NAME} PRIVATE SDL3::SDL3 spdlog)
 target_compile_definitions(${PROJECT_NAME} PRIVATE "ENABLE_DEBUG_LOGGING")
 
 add_library(Yeenboy::Yeenboy ALIAS ${PROJECT_NAME})
