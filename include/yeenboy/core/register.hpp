@@ -14,10 +14,10 @@ class Register {
    public:
     Register() = default;
     explicit Register(T val) : m_val(val) {}
-    ~Register() = default;
+    virtual ~Register() = default;
 
-    T Value() const { return m_val; }
-    void Set(T val) { m_val = val; }
+    virtual T Value() const { return m_val; }
+    virtual void Set(T val) { m_val = val; }
     int BitWidth() const { return sizeof(T) * 8; }
 
    protected:
@@ -32,13 +32,13 @@ class Register {
  * 16-bit arithmetic.
  *
  */
-class PairRegister {
+class PairRegister : public Register<u16> {
    public:
     PairRegister(Register<u8>& high, Register<u8>& low);
     ~PairRegister() = default;
 
-    u16 Value() const;
-    void Set(u16 val);
+    u16 Value() const override;
+    void Set(u16 val) override;
 
    private:
     Register<u8>& m_high;

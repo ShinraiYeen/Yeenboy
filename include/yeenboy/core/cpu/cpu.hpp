@@ -68,6 +68,7 @@ class CPU {
      * @return The byte being pointed to by the PC register before being incremented.
      */
     u8 GetPCByte();
+    u16 GetPCWord();
 
     // === Opcode Helpers ===
 
@@ -77,25 +78,54 @@ class CPU {
     int OpcodeHALT();  // Halt CPU until interrupt occurs
 
     // Load and store helpers
-    int OpcodeLD(PairRegister& store_addr, Register<u8>& load_reg);  // Write byte register to memory
-    int OpcodeLD(Register<u8>& store_reg, PairRegister& load_addr);  // Load from memory into byte register
-    int OpcodeLD(Register<u8>& store_reg, Register<u8>& load_reg);   // Copy into other byte register
+
+    void InternalLD(Register<u8>& reg, u8 val);
+    void InternalLD(Register<u16>& reg, u16 val);
+
+    int OpcodeLD(Register<u16>& store_addr, Register<u8>& load_reg);  // Write byte register to memory
+    int OpcodeLD(Register<u8>& store_reg, Register<u16>& load_addr);  // Load from memory into byte register
+    int OpcodeLD(Register<u8>& store_reg, Register<u8>& load_reg);    // Copy into other byte register
+    int OpcodeLD(Register<u16>& store_reg);
+    int OpcodeLD(Register<u8>& store_reg);
 
     // Arithmetic logic unit
+
+    u8 InternalAdd(u8 val, u8 carry);
+    u8 InternalSub(u8 val, u8 carry);
+    u8 InternalAnd(u8 val);
+    u8 InternalXor(u8 val);
+    u8 InternalOr(u8 val);
+
     int OpcodeINC(Register<u8>& reg);  // Increment
     int OpcodeDEC(Register<u8>& reg);  // Decrement
     int OpcodeADD(Register<u8>& reg);  // Addition
+    int OpcodeADD(Register<u16>& addr);
+    int OpcodeADD();
     int OpcodeSUB(Register<u8>& reg);  // Subtraction
+    int OpcodeSUB(Register<u16>& addr);
+    int OpcodeSUB();
     int OpcodeADC(Register<u8>& reg);  // Addition with carry
+    int OpcodeADC(Register<u16>& addr);
+    int OpcodeADC();
     int OpcodeSBC(Register<u8>& reg);  // Subtraction with carry
+    int OpcodeSBC(Register<u16>& addr);
+    int OpcodeSBC();
     int OpcodeAND(Register<u8>& reg);  // Bitwise AND
+    int OpcodeAND(Register<u16>& addr);
+    int OpcodeAND();
     int OpcodeXOR(Register<u8>& reg);  // Bitwise XOR
-    int OpcodeOR(Register<u8>& reg);   // Bitwise OR
-    int OpcodeCP(Register<u8>& reg);   // Comparison
+    int OpcodeXOR(Register<u16>& addr);
+    int OpcodeXOR();
+    int OpcodeOR(Register<u8>& reg);  // Bitwise OR
+    int OpcodeOR(Register<u16>& addr);
+    int OpcodeOR();
+    int OpcodeCP(Register<u8>& reg);  // Comparison
+    int OpcodeCP(Register<u16>& addr);
+    int OpcodeCP();
 
     // Stack operations
-    int OpcodePOP(PairRegister& reg);   // Stack POP
-    int OpcodePUSH(PairRegister& reg);  // Stack PUSH
+    int OpcodePOP(Register<u16>& reg);   // Stack POP
+    int OpcodePUSH(Register<u16>& reg);  // Stack PUSH
 
     // Rotates and shifts
     int OpcodeRCLA();
@@ -110,6 +140,14 @@ class CPU {
     int OpcodeSRL(Register<u8>& reg);
 
     // Branching
+    void InternalJump(u16 addr);
+
+    int OpcodeJP();
+    int OpcodeJP(bool condition_result);
+
+    void InternalJumpRelative(i8 val);
+    int OpcodeJR();
+    int OpcodeJR(bool condition_result);
 
     // Misc
     int OpcodeDI();    // Disable interrupts

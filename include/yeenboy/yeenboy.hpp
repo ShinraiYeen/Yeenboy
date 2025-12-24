@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SDL3/SDL.h>
+
 #include <filesystem>
 
 #include "yeenboy/core/cartridge/cartridge.hpp"
@@ -18,7 +20,9 @@ class Yeenboy {
    public:
     Yeenboy() = delete;
     explicit Yeenboy(const std::filesystem::path& path);
-    ~Yeenboy() = default;
+    ~Yeenboy();
+
+    void Init();
 
    private:
     Cartridge m_cartridge;
@@ -27,4 +31,9 @@ class Yeenboy {
     IOController m_io_controller;
     MemoryBus m_mmu;
     CPU m_cpu;
+
+    SDL_Renderer* m_renderer;
+    SDL_Window* m_window;
+
+    bool m_running = true;
 };

@@ -6,6 +6,7 @@ file(GLOB SOURCE_FILES
     "yeenboy/*.cpp"
     "yeenboy/core/*.cpp"
     "yeenboy/core/cpu/*.cpp"
+    "yeenboy/core/cpu/opcodes/*.cpp"
     "yeenboy/core/memory/*.cpp"
     "yeenboy/core/cartridge/*.cpp"
     "yeenboy/core/cartridge/mbc/*.cpp"
