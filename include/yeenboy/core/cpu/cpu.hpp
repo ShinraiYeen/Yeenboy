@@ -140,6 +140,15 @@ class CPU {
     int OpcodeSRA(Register<u8>& reg);
     int OpcodeSRL(Register<u8>& reg);
 
+    // Bit manipulation
+    u8 InternalBitSet(u8 value, u8 bit, bool set);
+    void InternalBitCheck(u8 value, u8 bit);
+
+    int OpcodeSetBitTo(Register<u8>& reg, u8 bit, bool set);
+    int OpcodeSetBitTo(Register<u16>& addr, u8 bit, bool set);
+    int OpcodeBIT(Register<u8>& reg, u8 bit);
+    int OpcodeBIT(Register<u16>& reg, u8 bit);
+
     // Branching
     void InternalJump(u16 addr);
 
