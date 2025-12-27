@@ -39,6 +39,7 @@ class PairRegister : public Register<u16> {
 
     u16 Value() const override;
     void Set(u16 val) override;
+    void Test() const;
 
    private:
     Register<u8>& m_high;

@@ -16,7 +16,6 @@ int main(int argc, char** argv) {
     }
 
     Yeenboy yeenboy(argv[1]);
-    yeenboy.Init();
 
     return EXIT_SUCCESS;
 }

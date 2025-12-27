@@ -1,13 +1,8 @@
 #pragma once
 
-#include <SDL3/SDL.h>
-
 #include <filesystem>
 
-#include "yeenboy/core/cartridge/cartridge.hpp"
-#include "yeenboy/core/cpu/cpu.hpp"
-#include "yeenboy/core/io_controller.hpp"
-#include "yeenboy/core/memory_bus.hpp"
+#include "yeenboy/core/system.hpp"
 
 /**
  * @brief Defines the Gameboy emulator.
@@ -16,24 +11,14 @@
  * class combines all of the modules of the emulator into a single system.
  *
  */
+
+// m_cartridge(path), m_mmu(m_wram, m_vram, m_cartridge, m_io_controller), m_cpu(m_mmu)
 class Yeenboy {
    public:
     Yeenboy() = delete;
     explicit Yeenboy(const std::filesystem::path& path);
-    ~Yeenboy();
-
-    void Init();
+    ~Yeenboy() = default;
 
    private:
-    Cartridge m_cartridge;
-    WRAM m_wram;
-    VRAM m_vram;
-    IOController m_io_controller;
-    MemoryBus m_mmu;
-    CPU m_cpu;
-
-    SDL_Renderer* m_renderer;
-    SDL_Window* m_window;
-
-    bool m_running = true;
+    System m_system;
 };
