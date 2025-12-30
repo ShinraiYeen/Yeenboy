@@ -1,4 +1,5 @@
 #include "yeenboy/common/types.hpp"
+#include "yeenboy/common/utils.hpp"
 #include "yeenboy/core/cpu/cpu.hpp"
 
 void CPU::InternalJump(u16 addr) { m_pc.Set(addr); }
@@ -37,4 +38,28 @@ int CPU::OpcodeJR(bool condition_result) {
 
     GetPCByte();  // Consume unused byte
     return 2;
+}
+
+u16 CPU::InternalPop() {
+    const u8 low = m_mem.Read(m_sp.Value());
+    const u8 high = m_mem.Read(m_sp.Value() + 1);
+    m_sp.Increment(2);
+    return util::CombineBytes(high, low);
+}
+
+void CPU::InternalPush(u16 val) {
+    const u8 low = util::ExtractLow(val);
+    const u8 high = util::ExtractHigh(val);
+    m_mem.Write(m_sp.Value() - 1, high);
+    m_mem.Write(m_sp.Value() - 2, low);
+    m_sp.Decrement(2);
+}
+
+int CPU::OpcodePOP(Register<u16>& reg) {
+    reg.Set(InternalPop());
+    return 3;
+}
+int CPU::OpcodePUSH(Register<u16>& reg) {
+    InternalPush(reg.Value());
+    return 4;
 }

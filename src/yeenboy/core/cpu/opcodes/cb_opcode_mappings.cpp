@@ -51,14 +51,14 @@ int CPU::CBOpcode2D() { return 0; }
 int CPU::CBOpcode2E() { return 0; }
 int CPU::CBOpcode2F() { return 0; }
 
-int CPU::CBOpcode30() { return 0; }
-int CPU::CBOpcode31() { return 0; }
-int CPU::CBOpcode32() { return 0; }
-int CPU::CBOpcode33() { return 0; }
-int CPU::CBOpcode34() { return 0; }
-int CPU::CBOpcode35() { return 0; }
-int CPU::CBOpcode36() { return 0; }
-int CPU::CBOpcode37() { return 0; }
+int CPU::CBOpcode30() { return OpcodeSWAP(m_b); }
+int CPU::CBOpcode31() { return OpcodeSWAP(m_c); }
+int CPU::CBOpcode32() { return OpcodeSWAP(m_d); }
+int CPU::CBOpcode33() { return OpcodeSWAP(m_e); }
+int CPU::CBOpcode34() { return OpcodeSWAP(m_h); }
+int CPU::CBOpcode35() { return OpcodeSWAP(m_l); }
+int CPU::CBOpcode36() { return OpcodeSWAP(m_hl); }
+int CPU::CBOpcode37() { return OpcodeSWAP(m_a); }
 int CPU::CBOpcode38() { return 0; }
 int CPU::CBOpcode39() { return 0; }
 int CPU::CBOpcode3A() { return 0; }

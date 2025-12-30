@@ -2,6 +2,8 @@
 
 #include "yeenboy/common/logger.hpp"
 System::System(const std::filesystem::path& path)
-    : m_cartridge(path), m_mmu(m_wram, m_vram, m_cartridge, m_io_controller), m_cpu(m_mmu) {
+    : m_cartridge(path), m_mmu(m_wram, m_vram, m_cartridge, m_io_controller, *this), m_cpu(m_mmu, *this) {
     Logger::Debug("Full system initialized");
 }
+
+void System::Tick(u32 m_cycles) { m_timer.Tick(m_cycles); }

@@ -7,13 +7,16 @@
 #include "yeenboy/common/utils.hpp"
 #include "yeenboy/core/cartridge/cartridge.hpp"
 #include "yeenboy/core/io_controller.hpp"
+#include "yeenboy/core/system.hpp"
 
-MemoryBus::MemoryBus(WRAM& wram, VRAM& vram, Cartridge& cartridge, IOController& io_controller)
-    : m_wram(wram), m_vram(vram), m_cartridge(cartridge), m_io_controller(io_controller) {
+MemoryBus::MemoryBus(WRAM& wram, VRAM& vram, Cartridge& cartridge, IOController& io_controller, System& system)
+    : m_sys(system), m_wram(wram), m_vram(vram), m_cartridge(cartridge), m_io_controller(io_controller) {
     Logger::Debug("Memory bus initialized");
 }
 
 u8 MemoryBus::Read(size_t addr) {
+    m_sys.Tick(4);
+
     size_t high_nibble = (addr >> 12) & 0xF;
 
     switch (high_nibble) {
@@ -38,27 +41,27 @@ u8 MemoryBus::Read(size_t addr) {
             return m_wram.Read(addr);
 
         default:
-            if (RANGE(addr, defs::mmu_addresses::kEchoRamStart, defs::mmu_addresses::kEchoRamEnd)) {
+            if (util::InRange(addr, defs::mmu_addresses::kEchoRamStart, defs::mmu_addresses::kEchoRamEnd)) {
                 // Echo RAM
                 return m_wram.Read(addr - (defs::mmu_addresses::kEchoRamStart - defs::mmu_addresses::kWramEnd));
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::kOamStart, defs::mmu_addresses::kOamEnd)) {
+            else if (util::InRange(addr, defs::mmu_addresses::kOamStart, defs::mmu_addresses::kOamEnd)) {
                 // Object attribute memory
                 throw std::runtime_error("OAM not implemented");
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::kUnusableStart, defs::mmu_addresses::kUnusableEnd)) {
+            else if (util::InRange(addr, defs::mmu_addresses::kUnusableStart, defs::mmu_addresses::kUnusableEnd)) {
                 // Unusable memory
                 throw std::runtime_error("Cannot read from unusable memory");
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::kIORegisterStart, defs::mmu_addresses::kIORegisterEnd)) {
+            else if (util::InRange(addr, defs::mmu_addresses::kIORegisterStart, defs::mmu_addresses::kIORegisterEnd)) {
                 // IO registers
                 return m_io_controller.Read(addr);
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::kHighRamStart, defs::mmu_addresses::kHighRamEnd)) {
+            else if (util::InRange(addr, defs::mmu_addresses::kHighRamStart, defs::mmu_addresses::kHighRamEnd)) {
                 // High RAM
                 throw std::runtime_error("High RAM not implemented");
             }
@@ -73,6 +76,8 @@ u8 MemoryBus::Read(size_t addr) {
 }
 
 void MemoryBus::Write(size_t addr, u8 val) {
+    m_sys.Tick(4);
+
     size_t high_nibble = (addr >> 12) & 0xF;
 
     switch (high_nibble) {
@@ -100,27 +105,27 @@ void MemoryBus::Write(size_t addr, u8 val) {
             break;
 
         default:
-            if (RANGE(addr, defs::mmu_addresses::kEchoRamStart, defs::mmu_addresses::kEchoRamEnd)) {
+            if (util::InRange(addr, defs::mmu_addresses::kEchoRamStart, defs::mmu_addresses::kEchoRamEnd)) {
                 // Echo RAM
                 m_wram.Write(addr - (defs::mmu_addresses::kEchoRamStart - defs::mmu_addresses::kWramEnd), val);
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::kOamStart, defs::mmu_addresses::kOamEnd)) {
+            else if (util::InRange(addr, defs::mmu_addresses::kOamStart, defs::mmu_addresses::kOamEnd)) {
                 // Object attribute memory
                 throw std::runtime_error("OAM not implemented");
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::kUnusableStart, defs::mmu_addresses::kUnusableEnd)) {
+            else if (util::InRange(addr, defs::mmu_addresses::kUnusableStart, defs::mmu_addresses::kUnusableEnd)) {
                 // Unusable memory
                 throw std::runtime_error("Cannot read from unusable memory");
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::kIORegisterStart, defs::mmu_addresses::kIORegisterEnd)) {
+            else if (util::InRange(addr, defs::mmu_addresses::kIORegisterStart, defs::mmu_addresses::kIORegisterEnd)) {
                 // IO registers
                 m_io_controller.Write(addr, val);
             }
 
-            else if (RANGE(addr, defs::mmu_addresses::kHighRamStart, defs::mmu_addresses::kHighRamEnd)) {
+            else if (util::InRange(addr, defs::mmu_addresses::kHighRamStart, defs::mmu_addresses::kHighRamEnd)) {
                 // High RAM
                 throw std::runtime_error("High RAM not implemented");
             }

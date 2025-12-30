@@ -18,6 +18,9 @@ class Register {
 
     virtual T Value() const { return m_val; }
     virtual void Set(T val) { m_val = val; }
+    virtual void Increment(T val) { Set(Value() + val); }
+    virtual void Decrement(T val) { Set(Value() - val); }
+
     int BitWidth() const { return sizeof(T) * 8; }
 
    protected:

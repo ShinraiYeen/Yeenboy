@@ -28,6 +28,9 @@
 #define AS_MAP(prefix, hex) &CPU::JOIN(prefix, hex),
 // clang-format on
 
+// Forward declarations
+class System;
+
 /**
  * @brief Defines the Gameboy DMG's CPU.
  *
@@ -38,13 +41,14 @@ class CPU {
     static constexpr unsigned int kMClockSpeedHz = kTClockSpeedHz / 4;  // 1.048576 MHz
 
     CPU() = delete;
-    explicit CPU(MemoryBus& mem);
+    explicit CPU(MemoryBus& mem, System& system);
     ~CPU() = default;
 
     void Tick();
 
    private:
     MemoryBus& m_mem;  // Memory bus
+    System& m_sys;     // Backwards reference to system for ticking purposes
 
     // CPU registers
     Register<u8> m_a, m_b, m_c, m_d, m_e, m_h, m_l;  // Standard 8-bit registers
@@ -124,10 +128,6 @@ class CPU {
     int OpcodeCP(Register<u16>& addr);
     int OpcodeCP();
 
-    // Stack operations
-    int OpcodePOP(Register<u16>& reg);   // Stack POP
-    int OpcodePUSH(Register<u16>& reg);  // Stack PUSH
-
     // Rotates and shifts
     int OpcodeRCLA();
     int OpcodeRLA();
@@ -149,7 +149,7 @@ class CPU {
     int OpcodeBIT(Register<u8>& reg, u8 bit);
     int OpcodeBIT(Register<u16>& reg, u8 bit);
 
-    // Branching
+    // Branching/Stack operations
     void InternalJump(u16 addr);
 
     int OpcodeJP();
@@ -160,10 +160,20 @@ class CPU {
     int OpcodeJR();
     int OpcodeJR(bool condition_result);
 
+    // Stack operations
+
+    u16 InternalPop();
+    void InternalPush(u16 val);
+    int OpcodePOP(Register<u16>& reg);   // Stack POP
+    int OpcodePUSH(Register<u16>& reg);  // Stack PUSH
+
     // Misc
-    int OpcodeDI();    // Disable interrupts
-    int OpcodeEI();    // Enable interrupts
-    int OpcodeSWAP();  // Swap nibbles
+    int OpcodeDI();  // Disable interrupts
+    int OpcodeEI();  // Enable interrupts
+
+    u8 InternalSwap(u8 val);
+    int OpcodeSWAP(Register<u8>& reg);
+    int OpcodeSWAP(Register<u16>& addr);
 
     // === Opcode Mapping Tables ===
 

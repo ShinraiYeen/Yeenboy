@@ -4,6 +4,7 @@
 #include "yeenboy/core/cartridge/cartridge.hpp"
 #include "yeenboy/core/cpu/cpu.hpp"
 #include "yeenboy/core/memory_bus.hpp"
+#include "yeenboy/core/timer.hpp"
 
 class System {
    public:
@@ -14,6 +15,7 @@ class System {
     void Tick(u32 m_cycles);
 
    private:
+    Timer m_timer;
     Cartridge m_cartridge;
     WRAM m_wram;
     VRAM m_vram;

@@ -205,11 +205,11 @@ int CPU::OpcodeBE() { return OpcodeCP(m_hl); }
 int CPU::OpcodeBF() { return OpcodeCP(m_a); }
 
 int CPU::OpcodeC0() { return 0; }
-int CPU::OpcodeC1() { return 0; }
+int CPU::OpcodeC1() { return OpcodePOP(m_bc); }
 int CPU::OpcodeC2() { return OpcodeJP(!m_f.Zero()); }
 int CPU::OpcodeC3() { return OpcodeJP(); }
 int CPU::OpcodeC4() { return 0; }
-int CPU::OpcodeC5() { return 0; }
+int CPU::OpcodeC5() { return OpcodePUSH(m_bc); }
 int CPU::OpcodeC6() { return OpcodeADD(); }
 int CPU::OpcodeC7() { return 0; }
 int CPU::OpcodeC8() { return 0; }
@@ -222,11 +222,11 @@ int CPU::OpcodeCE() { return OpcodeADC(); }
 int CPU::OpcodeCF() { return 0; }
 
 int CPU::OpcodeD0() { return 0; }
-int CPU::OpcodeD1() { return 0; }
+int CPU::OpcodeD1() { return OpcodePOP(m_de); }
 int CPU::OpcodeD2() { return OpcodeJP(!m_f.Carry()); }
 int CPU::OpcodeD3() { return OpcodeILLEGAL(); }
 int CPU::OpcodeD4() { return 0; }
-int CPU::OpcodeD5() { return 0; }
+int CPU::OpcodeD5() { return OpcodePUSH(m_de); }
 int CPU::OpcodeD6() { return OpcodeSUB(); }
 int CPU::OpcodeD7() { return 0; }
 int CPU::OpcodeD8() { return 0; }
@@ -239,11 +239,11 @@ int CPU::OpcodeDE() { return OpcodeSBC(); }
 int CPU::OpcodeDF() { return 0; }
 
 int CPU::OpcodeE0() { return 0; }
-int CPU::OpcodeE1() { return 0; }
+int CPU::OpcodeE1() { return OpcodePOP(m_hl); }
 int CPU::OpcodeE2() { return 0; }
 int CPU::OpcodeE3() { return OpcodeILLEGAL(); }
 int CPU::OpcodeE4() { return OpcodeILLEGAL(); }
-int CPU::OpcodeE5() { return 0; }
+int CPU::OpcodeE5() { return OpcodePUSH(m_hl); }
 int CPU::OpcodeE6() { return OpcodeAND(); }
 int CPU::OpcodeE7() { return 0; }
 int CPU::OpcodeE8() { return 0; }
@@ -260,7 +260,7 @@ int CPU::OpcodeF1() { return 0; }
 int CPU::OpcodeF2() { return 0; }
 int CPU::OpcodeF3() { return 0; }
 int CPU::OpcodeF4() { return OpcodeILLEGAL(); }
-int CPU::OpcodeF5() { return 0; }
+int CPU::OpcodeF5() { return OpcodePUSH(m_af); }
 int CPU::OpcodeF6() { return OpcodeOR(); }
 int CPU::OpcodeF7() { return 0; }
 int CPU::OpcodeF8() { return 0; }
