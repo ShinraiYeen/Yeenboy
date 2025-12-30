@@ -59,7 +59,42 @@ int CPU::OpcodePOP(Register<u16>& reg) {
     reg.Set(InternalPop());
     return 3;
 }
+
 int CPU::OpcodePUSH(Register<u16>& reg) {
     InternalPush(reg.Value());
     return 4;
+}
+
+void CPU::InternalCall(u16 val) { InternalPush(val); }
+
+int CPU::OpcodeCALL() {
+    const u16 val = GetPCWord();
+    InternalCall(val);
+    return 6;
+}
+
+int CPU::OpcodeCALL(bool condition_result) {
+    const u16 val = GetPCWord();
+    if (condition_result) {
+        InternalCall(val);
+        return 6;
+    }
+
+    return 3;
+}
+
+void CPU::InternalReturn() { m_pc.Set(InternalPop()); }
+
+int CPU::OpcodeRET() {
+    InternalReturn();
+    return 4;
+}
+
+int CPU::OpcodeRET(bool condition_result) {
+    if (condition_result) {
+        InternalReturn();
+        return 5;
+    }
+
+    return 2;
 }

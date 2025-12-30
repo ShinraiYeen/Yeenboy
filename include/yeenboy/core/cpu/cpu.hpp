@@ -160,8 +160,15 @@ class CPU {
     int OpcodeJR();
     int OpcodeJR(bool condition_result);
 
-    // Stack operations
+    void InternalCall(u16 val);
+    int OpcodeCALL();
+    int OpcodeCALL(bool condition_result);
 
+    void InternalReturn();
+    int OpcodeRET();
+    int OpcodeRET(bool condition_result);
+
+    // Stack operations
     u16 InternalPop();
     void InternalPush(u16 val);
     int OpcodePOP(Register<u16>& reg);   // Stack POP
