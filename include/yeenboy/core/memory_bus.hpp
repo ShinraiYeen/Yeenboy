@@ -15,7 +15,7 @@ class MemoryBus {
    public:
     // Constructors
     MemoryBus() = delete;
-    MemoryBus(WRAM& wram, VRAM& vram, Cartridge& cartridge, IOController& io_controller, System& system);
+    MemoryBus(WRAM& wram, VRAM& vram, Cartridge& cartridge, IOController& io_controlle);
 
     // Destructors
     ~MemoryBus() = default;
@@ -24,7 +24,6 @@ class MemoryBus {
     void Write(size_t addr, u8 val);
 
    private:
-    System& m_sys;
     WRAM& m_wram;            // Work RAM
     VRAM& m_vram;            // Video RAM
     Cartridge& m_cartridge;  // Cartridge

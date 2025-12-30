@@ -41,14 +41,13 @@ class CPU {
     static constexpr unsigned int kMClockSpeedHz = kTClockSpeedHz / 4;  // 1.048576 MHz
 
     CPU() = delete;
-    explicit CPU(MemoryBus& mem, System& system);
+    explicit CPU(MemoryBus& mem);
     ~CPU() = default;
 
     void Tick();
 
    private:
     MemoryBus& m_mem;  // Memory bus
-    System& m_sys;     // Backwards reference to system for ticking purposes
 
     // CPU registers
     Register<u8> m_a, m_b, m_c, m_d, m_e, m_h, m_l;  // Standard 8-bit registers
@@ -59,6 +58,7 @@ class CPU {
 
     // CPU flags
     bool m_halt_cpu = false;
+    bool m_interupt_master_enable = false;
 
     // === General CPU Helpers ===
 
@@ -100,9 +100,13 @@ class CPU {
     u8 InternalAnd(u8 val);
     u8 InternalXor(u8 val);
     u8 InternalOr(u8 val);
+    u8 InternalIncrement(u8 val);
+    u8 InternalDecrement(u8 val);
 
     int OpcodeINC(Register<u8>& reg);  // Increment
+    int OpcodeINC(Register<u16>& addr);
     int OpcodeDEC(Register<u8>& reg);  // Decrement
+    int OpcodeDEC(Register<u16>& addr);
     int OpcodeADD(Register<u8>& reg);  // Addition
     int OpcodeADD(Register<u16>& addr);
     int OpcodeADD();
@@ -127,6 +131,12 @@ class CPU {
     int OpcodeCP(Register<u8>& reg);  // Comparison
     int OpcodeCP(Register<u16>& addr);
     int OpcodeCP();
+
+    // 16-bit arithmetic
+    u16 InternalIncrement(u16 val);
+    u16 InternalDecrement(u16 val);
+    int OpcodeINCWord(Register<u16>& reg);
+    int OpcodeDECWord(Register<u16>& reg);
 
     // Rotates and shifts
     int OpcodeRCLA();
@@ -167,6 +177,7 @@ class CPU {
     void InternalReturn();
     int OpcodeRET();
     int OpcodeRET(bool condition_result);
+    int OpcodeRETI();
 
     // Stack operations
     u16 InternalPop();

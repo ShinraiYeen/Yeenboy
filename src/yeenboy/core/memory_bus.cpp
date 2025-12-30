@@ -9,14 +9,12 @@
 #include "yeenboy/core/io_controller.hpp"
 #include "yeenboy/core/system.hpp"
 
-MemoryBus::MemoryBus(WRAM& wram, VRAM& vram, Cartridge& cartridge, IOController& io_controller, System& system)
-    : m_sys(system), m_wram(wram), m_vram(vram), m_cartridge(cartridge), m_io_controller(io_controller) {
+MemoryBus::MemoryBus(WRAM& wram, VRAM& vram, Cartridge& cartridge, IOController& io_controller)
+    : m_wram(wram), m_vram(vram), m_cartridge(cartridge), m_io_controller(io_controller) {
     Logger::Debug("Memory bus initialized");
 }
 
 u8 MemoryBus::Read(size_t addr) {
-    m_sys.Tick(4);
-
     size_t high_nibble = (addr >> 12) & 0xF;
 
     switch (high_nibble) {
@@ -76,8 +74,6 @@ u8 MemoryBus::Read(size_t addr) {
 }
 
 void MemoryBus::Write(size_t addr, u8 val) {
-    m_sys.Tick(4);
-
     size_t high_nibble = (addr >> 12) & 0xF;
 
     switch (high_nibble) {

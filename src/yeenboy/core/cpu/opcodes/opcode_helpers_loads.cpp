@@ -17,6 +17,7 @@ int CPU::OpcodeLD(Register<u8>& store_reg, Register<u8>& load_reg) {
     return 1;
 }
 
+// TODO: This is not correct
 int CPU::OpcodeLD(Register<u16>& store_reg) {
     u8 low = GetPCByte();
     u8 high = GetPCByte();

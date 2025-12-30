@@ -1,29 +1,59 @@
 #include "yeenboy/core/cpu/cpu.hpp"
 
-int CPU::OpcodeINC(Register<u8>& reg) {
-    const u8 original_val = reg.Value();
-    const u8 result = original_val + 1;
+u8 CPU::InternalIncrement(u8 val) {
+    const u8 result = val + 1;
 
     m_f.SetZero(result == 0x00);
     m_f.SetNegative(false);
-    m_f.SetHalfCarry(((original_val & 0x0F) == 0xF));
+    m_f.SetHalfCarry(((val & 0x0F) == 0xF));
 
-    reg.Set(result);
+    return result;
+}
 
+u16 CPU::InternalIncrement(u16 val) { return val + 1; }
+
+int CPU::OpcodeINC(Register<u8>& reg) {
+    reg.Set(InternalIncrement(reg.Value()));
     return 1;
 }
 
-int CPU::OpcodeDEC(Register<u8>& reg) {
-    const u8 original_val = reg.Value();
-    const u8 result = original_val - 1;
+int CPU::OpcodeINC(Register<u16>& addr) {
+    const u8 result = InternalIncrement(m_mem.Read(addr.Value()));
+    m_mem.Write(addr.Value(), result);
+    return 3;
+}
+
+int CPU::OpcodeINCWord(Register<u16>& reg) {
+    reg.Set(InternalIncrement(reg.Value()));
+    return 2;
+}
+
+u8 CPU::InternalDecrement(u8 val) {
+    const u8 result = val - 1;
 
     m_f.SetZero(result == 0x00);
     m_f.SetNegative(true);
-    m_f.SetHalfCarry(((original_val & 0x0F) == 0x00));
+    m_f.SetHalfCarry(((val & 0x0F) == 0x00));
 
-    reg.Set(result);
+    return result;
+}
 
+u16 CPU::InternalDecrement(u16 val) { return val - 1; }
+
+int CPU::OpcodeDEC(Register<u8>& reg) {
+    reg.Set(InternalDecrement(reg.Value()));
     return 1;
+}
+
+int CPU::OpcodeDEC(Register<u16>& addr) {
+    const u8 result = InternalDecrement(m_mem.Read(addr.Value()));
+    m_mem.Write(addr.Value(), result);
+    return 3;
+}
+
+int CPU::OpcodeDECWord(Register<u16>& reg) {
+    reg.Set(InternalDecrement(reg.Value()));
+    return 2;
 }
 
 u8 CPU::InternalAdd(u8 val, u8 carry) {

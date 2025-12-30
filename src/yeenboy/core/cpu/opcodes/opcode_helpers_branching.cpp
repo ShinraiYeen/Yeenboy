@@ -98,3 +98,9 @@ int CPU::OpcodeRET(bool condition_result) {
 
     return 2;
 }
+
+int CPU::OpcodeRETI() {
+    InternalReturn();
+    m_interupt_master_enable = true;
+    return 4;
+}
