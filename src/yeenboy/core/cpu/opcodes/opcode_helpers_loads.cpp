@@ -17,12 +17,8 @@ int CPU::OpcodeLD(Register<u8>& store_reg, Register<u8>& load_reg) {
     return 1;
 }
 
-// TODO: This is not correct
-int CPU::OpcodeLD(Register<u16>& store_reg) {
-    u8 low = GetPCByte();
-    u8 high = GetPCByte();
-    u16 val = util::CombineBytes(high, low);
-    store_reg.Set(val);
+int CPU::OpcodeLD(Register<u16>& addr) {
+    m_mem.Write(addr.Value(), GetPCByte());
     return 3;
 }
 

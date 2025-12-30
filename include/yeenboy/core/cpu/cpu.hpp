@@ -90,7 +90,7 @@ class CPU {
     int OpcodeLD(Register<u16>& store_addr, Register<u8>& load_reg);  // Write byte register to memory
     int OpcodeLD(Register<u8>& store_reg, Register<u16>& load_addr);  // Load from memory into byte register
     int OpcodeLD(Register<u8>& store_reg, Register<u8>& load_reg);    // Copy into other byte register
-    int OpcodeLD(Register<u16>& store_reg);
+    int OpcodeLD(Register<u16>& addr);
     int OpcodeLD(Register<u8>& store_reg);
 
     // Arithmetic logic unit
